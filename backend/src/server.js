@@ -23,8 +23,13 @@ const app = express();
 
 app.use(express.json());
 
+//app.use(cors({
+  //: "http://localhost:5173",
+ // credentials: true,
+//}));
+
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: true,
   credentials: true,
 }));
 
@@ -49,6 +54,12 @@ app.use("/api/updates", techUpdateRoutes);
 app.use("/api/qna", qnaRoutes);
 app.use("/api/admin", adminUserRoutes);
 
-app.listen(5001, () => {
-console.log("Server running on port 5001");
+//app.listen(5001, () => {
+//console.log("Server running on port 5001");
+//});
+
+const PORT = process.env.PORT || 5001;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

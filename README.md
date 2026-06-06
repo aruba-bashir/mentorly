@@ -1,16 +1,133 @@
-# React + Vite
+**Mentorly --- Student-Alumni-Faculty Connect & Resource Sharing Platform**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Mentorly is a full-stack web application designed to connect students, mentors, and professionals through structured mentorship, Q&A, job/internship listings, webinars, and tech updates.
 
-Currently, two official plugins are available:
+It includes role-based dashboards (Admin, Mentor, Member, Master) and a secure authentication system.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Features**
+       
+Authentication & Security :
 
-## React Compiler
+User signup/login with email verification
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+JWT-based authentication
 
-## Expanding the ESLint configuration
+Password reset system
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Protected routes based on roles
+
+Role-Based System :
+
+Admin dashboard (manage users & platform)
+
+Mentor dashboard (manage mentorship content)
+
+Member dashboard (access learning resources)
+
+Master dashboard (platform overview control)
+
+Core Functionalities :
+
+Ask & answer questions (Q&A system)
+
+Connect with mentors/peers
+
+Job & internship listings
+
+Tech updates feed
+
+Webinar management system
+
+Admin Controls :
+
+Manage users
+
+Monitor platform activity
+
+Control internships/jobs postings
+
+  **Tech Stack**
+  
+Frontend
+
+React (Vite)
+
+JavaScript (ES6+)
+
+CSS3
+
+Axios
+
+React Router
+
+Backend
+
+Node.js
+
+Express.js
+
+MongoDB
+
+Mongoose
+
+JWT Authentication
+
+Nodemailer
+
+Tools & DevOps
+
+Git & GitHub
+
+REST APIs
+
+dotenv
+
+Multer (file uploads)
+
+ **Installation & Setup**
+ 
+1. Clone the repository
+   
+   git clone https://github.com/aruba-bashir/mentorly.git
+   
+   cd mentorly
+   
+3. Backend setup
+   
+   cd backend
+   
+   npm install
+
+   Create .env file:
+
+   PORT=5001
+   
+   MONGO_URI=your_mongodb_uri
+   
+   JWT_SECRET=your_secret
+
+   Run backend:
+   
+   npm start
+   
+5. Frontend setup
+   
+   cd frontend
+   
+   npm install
+   
+   npm run dev
+
+**Environment Variables**
+
+Make sure to create .env files in backend (and frontend if needed):
+
+MongoDB URI
+
+JWT Secret
+
+Email credentials (if used)
+
+**Note**
+
+This is a full-stack educational/mentorship platform built for learning, collaboration, and career growth.

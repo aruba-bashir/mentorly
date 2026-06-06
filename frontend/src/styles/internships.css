@@ -1,0 +1,44 @@
+.internship-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.page-title {
+  margin-bottom: 20px;
+}
+
+/* FORM LAYOUT ONLY */
+.internship-form {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* inputs still local styling ok */
+.internship-form input,
+.internship-form textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* LIST */
+.internship-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* CARD → USE GLOBAL CARD 
+.internship-card {
+
+  /* no styling needed if you use class="card" in JSX 
+} */
+
+/* ERROR */
+.error {
+  color: red;
+  font-size: 12px;
+}

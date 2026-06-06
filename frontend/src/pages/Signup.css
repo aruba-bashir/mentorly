@@ -1,0 +1,89 @@
+
+.error {
+  color: #e11d48;
+  font-size: 13px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+.input-error {
+  border: 1px solid #e11d48 !important;
+}
+
+/* Password */
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.password-field span {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+}
+
+/* Back button */
+/* BACK BUTTON FIX (STRONG OVERRIDE) */
+.back-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.back-btn {
+  all: unset !important;              /*  kills ALL inherited styles */
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+ 
+  font-size: 14px;
+  color: #6b7280;
+  cursor: pointer;
+
+  width: auto !important;            /*  stops full width */
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+.back-btn:hover {
+  color: #111;
+  
+}
+
+/* Main button ONLY */
+.auth-btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #5f5cff);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.password-hint {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+.success {
+  color: green;
+  background: #e6fffa;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+

@@ -1,0 +1,476 @@
+/*.qna-container {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+}
+
+.qna-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ask-btn {
+  background: #4caf50;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.qna-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.qna-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: black;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: 0.2s;
+}
+
+.qna-card:hover {
+  transform: translateY(-3px);
+}
+
+.qna-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 12px;
+  color: gray;
+}
+/* DELETE BUTTON 
+.delete-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border: none;
+  padding: 4px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* BADGES 
+.badge {
+  margin-left: 6px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+.mentor {
+  background: #2196f3;
+  color: white;
+}
+
+.master {
+  background: #9c27b0;
+  color: white;
+}
+
+/* CARD POSITION FIX 
+.qna-card {
+  position: relative;
+}
+.delete-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.delete-btn svg {
+  color: #888;
+  transition: 0.2s;
+}
+
+.delete-btn:hover svg {
+  color: #ff4d4d;
+  transform: scale(1.1);
+}*/
+.qna-container {
+
+  max-width: 900px;
+
+  margin: 0 auto;
+
+  padding: 10px 0 40px;
+}
+
+/* HEADER */
+
+.qna-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 28px;
+}
+
+.qna-header h2 {
+
+  font-size: 30px;
+
+  font-weight: 700;
+
+  letter-spacing: -0.5px;
+
+  color: var(--text);
+}
+
+/* ASK BUTTON */
+
+.ask-btn {
+
+  background: var(--primary);
+
+  color: white;
+
+  padding: 10px 16px;
+
+  border-radius: 10px;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  transition: var(--transition);
+}
+
+.ask-btn:hover {
+
+  background: var(--primary-hover);
+}
+
+/* LIST */
+
+.qna-list {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+/* CARD */
+
+.qna-card {
+
+  position: relative;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+
+  border-radius: 16px;
+
+  padding: 22px;
+
+  text-decoration: none;
+
+  transition: var(--transition);
+}
+
+.qna-card:hover {
+
+  border-color: #d6d3d1;
+
+  transform: translateY(-2px);
+}
+
+/* TITLE */
+
+.qna-card h3 {
+
+  font-size: 20px;
+
+  font-weight: 600;
+
+  color: var(--text);
+
+  margin-bottom: 10px;
+
+  line-height: 1.4;
+}
+
+/* DESCRIPTION */
+
+.qna-card p {
+
+  color: var(--text-light);
+
+  font-size: 15px;
+
+  line-height: 1.7;
+
+  white-space: pre-wrap;
+
+  word-break: break-word;
+}
+
+/* META */
+
+.qna-meta {
+
+  margin-top: 18px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+
+  font-size: 13px;
+
+  color: var(--text-light);
+}
+
+/* BADGES */
+
+.badge {
+
+  margin-left: 8px;
+
+  padding: 3px 8px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+
+  font-weight: 500;
+
+  background: #f5f5f4;
+
+  color: var(--text);
+}
+
+.mentor,
+.master {
+
+  background: #f5f5f4;
+
+  color: var(--text);
+}
+
+/* DELETE */
+
+.delete-btn {
+
+  position: absolute;
+
+  top: 16px;
+
+  right: 16px;
+
+  background: transparent;
+
+  border: none;
+
+  cursor: pointer;
+
+  padding: 4px;
+}
+
+.delete-btn svg {
+
+  color: #a8a29e;
+
+  transition: var(--transition);
+}
+
+.delete-btn:hover svg {
+
+  color: #57534e;
+
+  transform: scale(1.05);
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+  .qna-header {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 14px;
+  }
+
+  .qna-card {
+
+    padding: 18px;
+  }
+
+  .qna-card h3 {
+
+    font-size: 18px;
+  }
+}
+/* =========================
+   FORM STYLING
+========================= */
+
+.qna-form {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+/* INPUTS */
+
+.qna-form input,
+.qna-form textarea {
+
+  width: 100%;
+
+  border: 1px solid var(--border);
+
+  background: var(--surface);
+
+  border-radius: 14px;
+
+  padding: 14px 16px;
+
+  font-size: 15px;
+
+  color: var(--text);
+
+  transition: var(--transition);
+
+  outline: none;
+}
+
+/* TEXTAREA */
+
+.qna-form textarea {
+
+  min-height: 180px;
+
+  resize: vertical;
+
+  line-height: 1.7;
+
+  white-space: pre-wrap;
+}
+
+/* FOCUS */
+
+.qna-form input:focus,
+.qna-form textarea:focus {
+
+  border-color: #d6d3d1;
+
+  background: #fff;
+}
+
+/* ERROR */
+
+.form-error {
+
+  color: #b91c1c;
+
+  font-size: 13px;
+
+  margin-top: -10px;
+}
+
+/* CHARACTER COUNT */
+
+.char-count {
+
+  font-size: 13px;
+
+  color: var(--text-light);
+
+  text-align: right;
+
+  margin-top: -8px;
+}
+
+/* BUTTON */
+
+.qna-submit-btn {
+
+  align-self: flex-start;
+
+  border: none;
+
+  background: var(--primary);
+
+  color: white;
+
+  padding: 11px 18px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  transition: var(--transition);
+}
+
+.qna-submit-btn:hover {
+
+  background: var(--primary-hover);
+}
+
+/* ANSWERS */
+
+.answers-list {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+
+  margin-bottom: 30px;
+}
+
+.answer-author {
+
+  margin-top: 16px;
+
+  font-size: 13px;
+
+  color: var(--text-light);
+}
+
+/* EMPTY */
+
+.empty-state {
+
+  color: var(--text-light);
+
+  font-size: 15px;
+
+  padding: 10px 0;
+}

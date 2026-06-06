@@ -1,0 +1,182 @@
+/* *{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", system-ui, Arial, sans-serif;
+}
+
+body {
+  background-color: #ffffff;
+  color: #111827;
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+
+  --bg: #f7f7f5;
+
+  --surface: #ffffff;
+
+  --text: #1c1917;
+
+  --text-light: #78716c;
+
+  --border: #e7e5e4;
+
+  --primary: #292524;
+
+  --primary-hover: #44403c;
+
+  --radius: 14px;
+
+  --transition: 0.2s ease;
+
+  --sidebar-width: 260px;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
+body{
+  font-family: "Inter", sans-serif;
+
+  background: var(--bg);
+
+  color: var(--text);
+
+  line-height: 1.6;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select{
+  font: inherit;
+}
+.auth-container {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.auth-box h2 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.auth-box p {
+  color: #6b7280;
+  margin-bottom: 25px;
+}
+
+.auth-box input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.auth-box button {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.auth-box button:hover {
+  background-color: var(--primary-hover);
+}
+
+.auth-link {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.auth-link span {
+  color: #4f46e5;
+  cursor: pointer;
+  font-weight: 500;
+}
+.auth-select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: white;
+}
+
+/* ---------- REUSABLE UI ---------- */
+
+.page-container{
+  padding: 24px;
+}
+
+.card{
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius);
+
+  padding: 20px;
+}
+
+.btn{
+  border: none;
+
+  background: var(--primary);
+
+  color: white;
+
+  padding: 10px 18px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition: var(--transition);
+
+  font-weight: 500;
+}
+
+.btn:hover{
+  background: var(--primary-hover);
+}
+
+
+
+

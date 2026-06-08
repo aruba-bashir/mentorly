@@ -29,8 +29,12 @@ app.use(express.json());
 //}));
 
 app.use(cors({
-  origin: true,
-  credentials: true,
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "https://mentorly-bice.vercel.app"
+  ],
+  credentials: true
 }));
 
 app.use(express.json());

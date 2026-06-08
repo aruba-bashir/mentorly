@@ -4,13 +4,13 @@ export const sendEmail = async (to, subject, text) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "aruba9541@gmail.com",
-      pass: "syrznyeuhevsjjnu",
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
   });
 
   await transporter.sendMail({
-    from: "Mentorly <aruba9541@gmail.com>",
+    from: `Mentorly <${process.env.EMAIL_USER}>`,
     to,
     subject,
     text,

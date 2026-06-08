@@ -1,20 +1,18 @@
-import nodemailer from "nodemailer";
+//import nodemailer from "nodemailer";
+import { Resend } from "resend";
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendEmail = async (to, subject, text) => {
-  const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+  try {
+    const data = await resend.emails.send({
+      from: "Mentorly <onboarding@resend.dev>",
+      to,
+      subject,
+      text,
+    });
 
-  await transporter.sendMail({
-    from: `Mentorly <${process.env.EMAIL_USER}>`,
-    to,
-    subject,
-    text,
-  });
+    return data;
+  } catch (error) {
+    console.error("Email error:", error);
+  }
 };

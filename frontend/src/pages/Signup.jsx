@@ -110,7 +110,7 @@ if (!email) {
 
     try {
       const response = await fetch(
-        "http://localhost:5001/api/auth/signup",
+        "https://mentorly-backend-9x4x.onrender.com/api/auth/signup",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

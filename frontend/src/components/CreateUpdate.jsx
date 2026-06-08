@@ -129,7 +129,7 @@ function CreateUpdate({ fetchUpdates }) {
      // }
 
       await axios.post(
-        "http://localhost:5001/api/updates",
+        "https://mentorly-backend-9x4x.onrender.com/api/updates",
         data,
         {
           headers: {

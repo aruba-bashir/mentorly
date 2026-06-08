@@ -1,4 +1,4 @@
-const API = "http://localhost:5001/api/admin/users";
+const API = "https://mentorly-backend-9x4x.onrender.com/api/admin/users";
 
 export const getUsers = async () => {
   const res = await fetch(API);

@@ -18,7 +18,7 @@ export default function CreateJobForm() {
     e.preventDefault();
 
     await axios.post(
-      "http://localhost:5001/jobs/internal",
+      "https://mentorly-backend-9x4x.onrender.com/jobs/internal",
       form,
       {
         headers: {

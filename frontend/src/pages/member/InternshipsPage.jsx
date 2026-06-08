@@ -19,7 +19,7 @@ export default function InternshipsPage() {
 
   //  Fetch internships
   const fetchInternships = () => {
-    axios.get("http://localhost:5001/internships", {
+    axios.get("https://mentorly-backend-9x4x.onrender.com/internships", {
       headers: { Authorization: `Bearer ${token}` },
       params: {
         search,
@@ -41,7 +41,7 @@ export default function InternshipsPage() {
   const applyInternship = async (id) => {
     try {
       await axios.post(
-        `http://localhost:5001/internships/${id}/apply`,
+        `https://mentorly-backend-9x4x.onrender.com/internships/${id}/apply`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -27,7 +27,7 @@ export default function MasterJobsPage() {
   // FETCH JOBS
   const fetchJobs = () => {
     axios
-      .get("http://localhost:5001/jobs", {
+      .get("https://mentorly-backend-9x4x.onrender.com/jobs", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -222,7 +222,7 @@ export default function MasterJobsPage() {
     try {
 
       await axios.post(
-        "http://localhost:5001/jobs",
+        "https://mentorly-backend-9x4x.onrender.com/jobs",
         {
           title: title.trim(),
           company: company.trim(),
@@ -264,7 +264,7 @@ export default function MasterJobsPage() {
     try {
 
       await axios.delete(
-        `http://localhost:5001/jobs/${id}`,
+        `https://mentorly-backend-9x4x.onrender.com/jobs/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

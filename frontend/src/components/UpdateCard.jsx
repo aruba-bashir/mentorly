@@ -8,7 +8,7 @@ function UpdateCard({ update, fetchUpdates }) {
     const token = localStorage.getItem("token");
 
     await axios.delete(
-      `http://localhost:5001/api/updates/${update._id}`,
+      `https://mentorly-backend-9x4x.onrender.com/api/updates/${update._id}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

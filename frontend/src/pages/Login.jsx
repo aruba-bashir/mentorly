@@ -146,7 +146,7 @@ const validate = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5001/api/auth/login",
+        "https://mentorly-backend-9x4x.onrender.com/api/auth/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

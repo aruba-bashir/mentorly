@@ -21,7 +21,7 @@ function Profile() {
 
   // FETCH PROFILE
   const fetchProfile = async () => {
-    const res = await fetch("http://localhost:5001/api/users/me", {
+    const res = await fetch("https://mentorly-backend-9x4x.onrender.com/api/users/me", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -60,7 +60,7 @@ function Profile() {
     formDataToSend.append("removeProfilePic", "true");
 
     const res = await fetch(
-      "http://localhost:5001/api/users/update",
+      "https://mentorly-backend-9x4x.onrender.com/api/users/update",
       {
         method: "PUT",
         headers: {
@@ -93,7 +93,7 @@ function Profile() {
     }
 
     const res = await fetch(
-      "http://localhost:5001/api/users/update",
+      "https://mentorly-backend-9x4x.onrender.com/api/users/update",
       {
         method: "PUT",
         headers: {
@@ -121,7 +121,7 @@ function Profile() {
           <img
             src={
               user.profilePic
-                ? `http://localhost:5001/${user.profilePic}`
+                ? `https://mentorly-backend-9x4x.onrender.com/${user.profilePic}`
                 : `https://ui-avatars.com/api/?name=${user.name}`
             }
             className="profile-pic"
@@ -253,7 +253,7 @@ function Profile() {
     try {
 
       const res = await fetch(
-        "http://localhost:5001/api/users/me",
+        "https://mentorly-backend-9x4x.onrender.com/api/users/me",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -486,7 +486,7 @@ setPreview(
     );
 
     const res = await fetch(
-      "http://localhost:5001/api/users/update",
+      "https://mentorly-backend-9x4x.onrender.com/api/users/update",
       {
         method: "PUT",
 
@@ -561,7 +561,7 @@ setPreview(
       }
 
       const res = await fetch(
-        "http://localhost:5001/api/users/update",
+        "https://mentorly-backend-9x4x.onrender.com/api/users/update",
         {
           method: "PUT",
           headers: {
@@ -611,7 +611,7 @@ setPreview(
   preview
     ? preview
     : user.profilePic
-    ? `http://localhost:5001/${user.profilePic}`
+    ? `https://mentorly-backend-9x4x.onrender.com/${user.profilePic}`
     : `https://ui-avatars.com/api/?name=${user.name}`
 }
           

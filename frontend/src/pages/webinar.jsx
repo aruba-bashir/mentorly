@@ -44,7 +44,7 @@ const Webinars = () => {
     try {
 
       const res = await fetch(
-        "http://localhost:5001/api/webinars",
+        "https://mentorly-backend-9x4x.onrender.com/api/webinars",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -329,8 +329,8 @@ const Webinars = () => {
 
         const url =
           editingWebinar
-            ? `http://localhost:5001/api/webinars/${editingWebinar._id}`
-            : "http://localhost:5001/api/webinars";
+            ? `https://mentorly-backend-9x4x.onrender.com/api/webinars/${editingWebinar._id}`
+            : "https://mentorly-backend-9x4x.onrender.com/api/webinars";
 
         const method =
           editingWebinar
@@ -406,7 +406,7 @@ const Webinars = () => {
 
         const res =
           await fetch(
-            `http://localhost:5001/api/webinars/${id}`,
+            `https://mentorly-backend-9x4x.onrender.com/api/webinars/${id}`,
             {
               method: "DELETE",
               headers: {

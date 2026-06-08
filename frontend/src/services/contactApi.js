@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:5001/api";
+const API_BASE = "https://mentorly-backend-9x4x.onrender.com/api";
 
 const getAuthHeaders = () => ({
   "Content-Type": "application/json",

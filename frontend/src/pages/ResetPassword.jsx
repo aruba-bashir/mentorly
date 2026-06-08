@@ -62,7 +62,7 @@ const handleChange = (e) => {
 
     try {
       const res = await fetch(
-       `http://localhost:5001/api/auth/reset-password/${token}`,
+       `https://mentorly-backend-9x4x.onrender.com/api/auth/reset-password/${token}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

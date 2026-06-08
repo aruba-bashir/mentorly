@@ -17,7 +17,7 @@ function VerifyEmail() {
     const verify = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5001/api/auth/verify-email/${token}`
+          `https://mentorly-backend-9x4x.onrender.com/api/auth/verify-email/${token}`
         );
 
         const data = await res.json();

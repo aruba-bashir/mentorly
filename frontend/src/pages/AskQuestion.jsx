@@ -21,7 +21,7 @@ function AskQuestion() {
 
   const handleSubmit = async () => {
     try {
-      await fetch("http://localhost:5001/api/qna/questions", {
+      await fetch("https://mentorly-backend-9x4x.onrender.com/api/qna/questions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -231,7 +231,7 @@ function AskQuestion() {
     try {
 
       const res = await fetch(
-        "http://localhost:5001/api/qna/questions",
+        "https://mentorly-backend-9x4x.onrender.com/api/qna/questions",
         {
           method: "POST",
 

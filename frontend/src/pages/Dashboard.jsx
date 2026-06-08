@@ -50,7 +50,7 @@ function Dashboard() {
       const userId = user._id || user.id;
 
       // fetch questions
-      const qRes = await fetch("http://localhost:5001/api/qna/questions", {
+      const qRes = await fetch("https://mentorly-backend-9x4x.onrender.com/api/qna/questions", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -59,7 +59,7 @@ function Dashboard() {
       const questions = await qRes.json();
 
       // fetch answers
-      const aRes = await fetch("http://localhost:5001/api/qna/answers", {
+      const aRes = await fetch("https://mentorly-backend-9x4x.onrender.com/api/qna/answers", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

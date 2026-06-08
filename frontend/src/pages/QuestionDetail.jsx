@@ -21,7 +21,7 @@ function QuestionDetail() {
 
   const fetchAnswers = async () => {
     const res = await fetch(
-      `http://localhost:5001/api/qna/answers/${id}`,
+      `https://mentorly-backend-9x4x.onrender.com/api/qna/answers/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -38,7 +38,7 @@ function QuestionDetail() {
   }, []);
 
   const handleAnswer = async () => {
-    await fetch("http://localhost:5001/api/qna/answers", {
+    await fetch("https://mentorly-backend-9x4x.onrender.com/api/qna/answers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ function QuestionDetail() {
   };
 
   const handleDeleteAnswer = async (answerId) => {
-    await fetch(`http://localhost:5001/api/qna/answers/${answerId}`, {
+    await fetch(`https://mentorly-backend-9x4x.onrender.com/api/qna/answers/${answerId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -164,7 +164,7 @@ function QuestionDetail() {
     try {
 
       const res = await fetch(
-        `http://localhost:5001/api/qna/answers/${id}`,
+        `https://mentorly-backend-9x4x.onrender.com/api/qna/answers/${id}`,
         {
           headers: {
             Authorization:
@@ -280,7 +280,7 @@ function QuestionDetail() {
     try {
 
       const res = await fetch(
-        "http://localhost:5001/api/qna/answers",
+        "https://mentorly-backend-9x4x.onrender.com/api/qna/answers",
         {
           method: "POST",
 
@@ -333,7 +333,7 @@ function QuestionDetail() {
       try {
 
         await fetch(
-          `http://localhost:5001/api/qna/answers/${answerId}`,
+          `https://mentorly-backend-9x4x.onrender.com/api/qna/answers/${answerId}`,
           {
             method: "DELETE",
 

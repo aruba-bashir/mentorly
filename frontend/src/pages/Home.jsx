@@ -182,7 +182,7 @@ const [index, setIndex] = useState(0);
       </a>
 
       <a
-        href="https://x.com"
+        href="https://x.com/Mentorly_app"
         target="_blank"
         rel="noreferrer"
         className="social-box"

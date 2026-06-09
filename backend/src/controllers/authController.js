@@ -16,8 +16,8 @@ const generateToken = (id, role) => {
 
 export const signup = async (req, res) => {
   try {
-    console.log("🔥 SIGNUP HIT");
-console.log("📦 USER BODY:", req.body);
+   
+
     let { name, email, password, role } = req.body;
 
     // Trim & normalize
@@ -92,8 +92,9 @@ if (existingUser) {
   await existingUser.save();
 
   // resend verification mail
-  const verifyLink =
-    `http://localhost:5173/verify-email/${verifyToken}`;
+  
+   const verifyLink =
+   `https://mentorly-bice.vercel.app/verify-email/${verifyToken}`;
 
   await sendEmail(
     email,
@@ -127,13 +128,13 @@ if (existingUser) {
     //const verifyLink = `http://localhost:5173/verify-email/${verifyToken}`;
     const verifyLink =
    `https://mentorly-bice.vercel.app/verify-email/${verifyToken}`;
-   console.log("📨 ABOUT TO SEND EMAIL");
+
     await sendEmail(
       email,
       "Verify your Mentorly account",
       `Click to verify your account:\n${verifyLink}`
     );
-    console.log("📨 EMAIL SENT (IF SUCCESS)");
+    
 
     res.status(201).json({
       message: "Signup successful. Please verify your email.",

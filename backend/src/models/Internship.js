@@ -13,6 +13,11 @@ const internshipSchema = new mongoose.Schema(
     ref: "User",
     required: true
   },
+  source: {
+  type: String,
+  enum: ["internal", "external"],
+  default: "internal",
+},
 
   applicants: [
     {

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import { User, HelpCircle, MessageSquare, Activity } from "lucide-react";
 import { useAuth } from "../context/AuthContext"; 
@@ -226,17 +227,26 @@ function Dashboard() {
     </p>
   ) : (
     recommendedJobs.map((job) => (
-      <div
-        key={job._id}
-        className="recent-item"
-      >
-        <strong>{job.title}</strong>
-        <br />
-        <small>{job.location}</small>
-      </div>
+  <Link
+  key={job._id}
+  to={`${basePath}/jobs`}
+  className="recent-item"
+>
+  <strong>{job.title}</strong>
+  <br />
+  <small>{job.location}</small>
+</Link>
     ))
+    
   )}
+  <div style={{ marginTop: "12px" }}>
+  <Link to={`${basePath}/jobs`}>
+    View All Jobs →
+  </Link>
 </div>
+</div>
+
+
  <div className="card recent">
   <h3>Recommended Internships</h3>
 
@@ -246,20 +256,26 @@ function Dashboard() {
     </p>
   ) : (
     recommendedInternships.map((internship) => (
-      <div
-        key={internship._id}
-        className="recent-item"
-      >
-        <strong>{internship.title}</strong>
-        <br />
-        <small>{internship.location}</small>
-      </div>
+     <Link
+  key={internship._id}
+  to={`${basePath}/internships`}
+  className="recent-item"
+>
+  <strong>{internship.title}</strong>
+  <br />
+  <small>{internship.location}</small>
+</Link>
     ))
   )}
+
+<div style={{ marginTop: "12px" }}>
+  <Link to={`${basePath}/internships`}>
+    View All Internships →
+  </Link>
 </div>
 
-
-    </div>
+</div>
+</div>
   );
 }
 

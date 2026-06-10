@@ -17,6 +17,7 @@ import techUpdateRoutes from "./routes/techUpdateRoutes.js";
 import verifyRoute from "./routes/verifyRoute.js";
 import qnaRoutes from "./routes/qnaRoutes.js";
 import  adminUserRoutes from "./routes/adminUserRoutes.js";
+import recommendationRoutes from "./routes/recommendationRoutes.js";
 dotenv.config();
 
 const app = express();
@@ -57,7 +58,7 @@ app.use("/internships", internshipRoutes);
 app.use("/api/updates", techUpdateRoutes);
 app.use("/api/qna", qnaRoutes);
 app.use("/api/admin", adminUserRoutes);
-
+app.use("/api/recommendations", recommendationRoutes);
 //app.listen(5001, () => {
 //console.log("Server running on port 5001");
 //});

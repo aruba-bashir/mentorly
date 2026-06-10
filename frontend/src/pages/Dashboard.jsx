@@ -12,7 +12,9 @@ function Dashboard() {
   const { user, token, loading } = useAuth();
 
   const [recent, setRecent] = useState([]);
- const [stats, setStats] = useState({
+  const [recommendedJobs, setRecommendedJobs] = useState([]);
+  const [recommendedInternships, setRecommendedInternships] = useState([]);
+  const [stats, setStats] = useState({
   questions: 0,
   answers: 0,
  
@@ -92,9 +94,44 @@ function Dashboard() {
     }
   };
 
+ const fetchRecommendations = async () => {
+  try {
+    const [jobsRes, internshipsRes] = await Promise.all([
+      fetch(
+        "https://mentorly-backend-9x4x.onrender.com/api/recommendations/jobs",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
+      fetch(
+        "https://mentorly-backend-9x4x.onrender.com/api/recommendations/internships",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
+    ]);
+
+    const jobs = await jobsRes.json();
+    const internships = await internshipsRes.json();
+
+    setRecommendedJobs(jobs.slice(0, 3));
+    setRecommendedInternships(internships.slice(0, 3));
+
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
+  
   useEffect(() => {
     if (user && token) {
       fetchStats();
+      fetchRecommendations();
     }
   }, [user, token]); //  dependency fix
 
@@ -163,23 +200,65 @@ function Dashboard() {
         ) : (
           recent.map((item, i) => (
             <Link
-  key={i}
-  to={`${basePath}/question/${
-    user.role === "member"
-      ? item._id
-      : item.question
-  }`}
-  className="recent-item"
->
-  {user.role === "member"
-    ? item.title
-    : item.text.length > 120
-      ? item.text.slice(0, 120) + "..."
-      : item.text}
-</Link>
+           key={i}
+          to={`${basePath}/question/${
+          user.role === "member"
+          ? item._id
+           : item.question
+           }`}
+           className="recent-item"
+          >
+         {user.role === "member"
+        ? item.title
+        : item.text.length > 120
+        ? item.text.slice(0, 120) + "..."
+        : item.text}
+       </Link>
           ))
         )}
       </div>
+      <div className="card recent">
+  <h3>Recommended Jobs</h3>
+
+  {recommendedJobs.length === 0 ? (
+    <p className="empty">
+      No recommendations available
+    </p>
+  ) : (
+    recommendedJobs.map((job) => (
+      <div
+        key={job._id}
+        className="recent-item"
+      >
+        <strong>{job.title}</strong>
+        <br />
+        <small>{job.location}</small>
+      </div>
+    ))
+  )}
+</div>
+ <div className="card recent">
+  <h3>Recommended Internships</h3>
+
+  {recommendedInternships.length === 0 ? (
+    <p className="empty">
+      No recommendations available
+    </p>
+  ) : (
+    recommendedInternships.map((internship) => (
+      <div
+        key={internship._id}
+        className="recent-item"
+      >
+        <strong>{internship.title}</strong>
+        <br />
+        <small>{internship.location}</small>
+      </div>
+    ))
+  )}
+</div>
+
+
     </div>
   );
 }

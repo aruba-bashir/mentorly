@@ -520,22 +520,7 @@ body {
   color: #111827;
   transform: translateY(-2px);
 }
-/* Prevent long content from breaking mobile layouts */
-.card,
-p,
-span,
-small,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  overflow-wrap: break-word;
-  word-break: break-word;
-}
 
-/* Preserve user-entered line breaks */
 .card p {
   white-space: pre-wrap;
 }

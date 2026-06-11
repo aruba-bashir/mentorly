@@ -3,6 +3,7 @@
   display: flex;
 
   min-height: 100vh;
+  align-items: flex-start;
 }
 
 .dashboard-content{
@@ -10,4 +11,6 @@
   flex: 1;
 
   padding: 32px;
+
+  
 }

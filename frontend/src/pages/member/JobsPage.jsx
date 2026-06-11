@@ -21,7 +21,7 @@ export default function MemberJobsPage() {
 
   //  Fetch jobs function
   const fetchJobs = () => {
-    axios.get("https://mentorly-backend-9x4x.onrender.com/jobs", {
+    axios.get(`${import.meta.env.VITE_API_URL}/jobs`, {
       headers: { Authorization: `Bearer ${token}` },
       params: {
         search,
@@ -43,7 +43,7 @@ export default function MemberJobsPage() {
   const applyJob = async (id) => {
     try {
       await axios.post(
-        `https://mentorly-backend-9x4x.onrender.com/jobs/${id}/apply`,
+        `${import.meta.env.VITE_API_URL}/jobs/${id}/apply`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

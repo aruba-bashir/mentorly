@@ -146,7 +146,7 @@ const validate = () => {
 
     try {
       const response = await fetch(
-        "https://mentorly-backend-9x4x.onrender.com/api/auth/login",
+        `${import.meta.env.VITE_API_URL}/api/auth/login`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

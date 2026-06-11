@@ -1,64 +1,4 @@
-/*import { useState } from "react";
-import { Navigate } from "react-router-dom";
 
-function AskQuestion() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-
-  const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user"));
-  //if (!user) return <p>Loading...</p>;
-
-  // safety check
-  if (!user) return <p>Loading...</p>;
-
-  const basePath = `/${user.role}`;
-
-  //  Only MEMBER allowed
-  if (user.role !== "member") {
-    return <Navigate to={`${basePath}/qna`} />;
-  }
-
-  const handleSubmit = async () => {
-    try {
-      await fetch("https://mentorly-backend-9x4x.onrender.com/api/qna/questions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ title, description }),
-      });
-
-      //  redirect AFTER submit
-      window.location.href = `${basePath}/qna`;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  return (
-    <div className="qna-container">
-      <h2>Ask a Question</h2>
-
-      <input
-        placeholder="Question title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-
-      <textarea
-        placeholder="Describe your problem"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-
-      <button onClick={handleSubmit}>Post Question</button>
-    </div>
-  );
-}
-
-export default AskQuestion; */
 
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
@@ -231,7 +171,7 @@ function AskQuestion() {
     try {
 
       const res = await fetch(
-        "https://mentorly-backend-9x4x.onrender.com/api/qna/questions",
+        `${import.meta.env.VITE_API_URL}/api/qna/questions`,
         {
           method: "POST",
 

@@ -27,7 +27,7 @@
   const fetchJobs = () => {
 
     axios
-      .get("https://mentorly-backend-9x4x.onrender.com/jobs", {
+      .get(`${import.meta.env.VITE_API_URL}/jobs`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -259,7 +259,7 @@
     try {
 
       await axios.post(
-        "https://mentorly-backend-9x4x.onrender.com/jobs",
+        `${import.meta.env.VITE_API_URL}/jobs`,
         {
           title: title.trim(),
           company: company.trim(),
@@ -304,7 +304,7 @@
     try {
 
       await axios.delete(
-        `https://mentorly-backend-9x4x.onrender.com/jobs/${id}`,
+        `${import.meta.env.VITE_API_URL}/jobs/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -1,4 +1,5 @@
-const API_BASE = "https://mentorly-backend-9x4x.onrender.com/api";
+const API_BASE  =
+  `${import.meta.env.VITE_API_URL}/api`;
 
 const getAuthHeaders = () => ({
   "Content-Type": "application/json",

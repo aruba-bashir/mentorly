@@ -38,7 +38,7 @@ if (!emailRegex.test(cleanEmail)) {
 
     try {
       const res = await fetch(
-        "https://mentorly-backend-9x4x.onrender.com/api/auth/forgot-password",
+        `${import.meta.env.VITE_API_URL}/api/auth/forgot-password`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

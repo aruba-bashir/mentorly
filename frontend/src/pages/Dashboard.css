@@ -331,3 +331,11 @@
 
   color: var(--primary);
 }
+.external-badge {
+  background: #f3f0ff;
+  color:#5f3dc4;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}

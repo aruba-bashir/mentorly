@@ -1,119 +1,4 @@
-/*
-import { useEffect, useState } from "react";
 
-
-import { useParams } from "react-router-dom";
-import { Trash2 } from "lucide-react";
-
-function QuestionDetail() {
-  const { id } = useParams();
-
-  const [answers, setAnswers] = useState([]);
-  const [text, setText] = useState("");
-
-  const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user"));
-  //if (!user) return <p>Loading...</p>;
-
-  if (!user) return <p>Loading...</p>;
-
-  const canAnswer = ["mentor", "master"].includes(user.role);
-
-  const fetchAnswers = async () => {
-    const res = await fetch(
-      `https://mentorly-backend-9x4x.onrender.com/api/qna/answers/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    const data = await res.json();
-    setAnswers(data);
-  };
-
-  useEffect(() => {
-    fetchAnswers();
-  }, []);
-
-  const handleAnswer = async () => {
-    await fetch("https://mentorly-backend-9x4x.onrender.com/api/qna/answers", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        text,
-        questionId: id,
-      }),
-    });
-
-    setText("");
-    fetchAnswers();
-  };
-
-  const handleDeleteAnswer = async (answerId) => {
-    await fetch(`https://mentorly-backend-9x4x.onrender.com/api/qna/answers/${answerId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    fetchAnswers();
-  };
-
-  return (
-    <div className="qna-container">
-      <h2>Answers</h2>
-
-      {answers.map((a) => (
-        <div key={a._id} className="qna-card">
-          <p>{a.text}</p>
-
-          <small>
-            {a.user?.name}
-
-            {a.user?.role === "mentor" && (
-              <span className="badge mentor">Mentor</span>
-            )}
-            {a.user?.role === "master" && (
-              <span className="badge master">Master</span>
-            )}
-          </small>
-
-          {/*  DELETE *
-          {((user._id || user.id) === a.user?._id?.toString() ||
-            user.role === "admin") && (
-            <button
-              className="delete-btn"
-              onClick={() => handleDeleteAnswer(a._id)}
-            >
-              <Trash2 size={18} />
-            </button>
-          )}
-        </div>
-      ))}
-
-      {/*  ANSWER BOX *
-      {canAnswer && (
-        <>
-          <textarea
-            placeholder="Write your answer..."
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
-
-          <button onClick={handleAnswer}>Submit Answer</button>
-        </>
-      )}
-    </div>
-  );
-}
-
-export default QuestionDetail; */
 import { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
@@ -164,7 +49,7 @@ function QuestionDetail() {
     try {
 
       const res = await fetch(
-        `https://mentorly-backend-9x4x.onrender.com/api/qna/answers/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/qna/answers/${id}`,
         {
           headers: {
             Authorization:
@@ -280,7 +165,7 @@ function QuestionDetail() {
     try {
 
       const res = await fetch(
-        "https://mentorly-backend-9x4x.onrender.com/api/qna/answers",
+        `${import.meta.env.VITE_API_URL}/api/qna/answers`,
         {
           method: "POST",
 
@@ -333,7 +218,7 @@ function QuestionDetail() {
       try {
 
         await fetch(
-          `https://mentorly-backend-9x4x.onrender.com/api/qna/answers/${answerId}`,
+          `${import.meta.env.VITE_API_URL}/api/qna/answers/${answerId}`,
           {
             method: "DELETE",
 

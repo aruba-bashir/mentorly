@@ -9,7 +9,7 @@ export default function AdminInternshipsPage() {
   // Fetch all internships
   const fetchInternships = () => {
     axios
-      .get("https://mentorly-backend-9x4x.onrender.com/internships", {
+      .get(`${import.meta.env.VITE_API_URL}/internships`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setInternships(res.data))
@@ -23,7 +23,7 @@ export default function AdminInternshipsPage() {
   // Delete internship (admin only)
   const deleteInternship = async (id) => {
     try {
-      await axios.delete(`https://mentorly-backend-9x4x.onrender.com/internships/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/internships/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

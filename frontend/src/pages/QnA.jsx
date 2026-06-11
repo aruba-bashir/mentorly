@@ -17,7 +17,7 @@ function QnA() {
 
   const fetchQuestions = async () => {
     try {
-      const res = await fetch("https://mentorly-backend-9x4x.onrender.com/api/qna/questions", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/qna/questions`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -38,7 +38,7 @@ function QnA() {
     e.preventDefault();
 
     try {
-      await fetch(`https://mentorly-backend-9x4x.onrender.com/api/qna/questions/${id}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/qna/questions/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

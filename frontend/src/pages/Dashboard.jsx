@@ -53,7 +53,7 @@ function Dashboard() {
       const userId = user._id || user.id;
 
       // fetch questions
-      const qRes = await fetch("https://mentorly-backend-9x4x.onrender.com/api/qna/questions", {
+      const qRes = await fetch(`${import.meta.env.VITE_API_URL}/api/qna/questions`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -62,7 +62,7 @@ function Dashboard() {
       const questions = await qRes.json();
 
       // fetch answers
-      const aRes = await fetch("https://mentorly-backend-9x4x.onrender.com/api/qna/answers", {
+      const aRes = await fetch(`${import.meta.env.VITE_API_URL}/api/qna/answers`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -99,7 +99,7 @@ function Dashboard() {
   try {
     const [jobsRes, internshipsRes] = await Promise.all([
       fetch(
-        "https://mentorly-backend-9x4x.onrender.com/api/recommendations/jobs",
+        `${import.meta.env.VITE_API_URL}/api/recommendations/jobs`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -107,7 +107,7 @@ function Dashboard() {
         }
       ),
       fetch(
-        "https://mentorly-backend-9x4x.onrender.com/api/recommendations/internships",
+        `${import.meta.env.VITE_API_URL}/api/recommendations/internships`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -232,9 +232,18 @@ function Dashboard() {
   to={`${basePath}/jobs`}
   className="recent-item"
 >
+ <div style={{ display: "flex", justifyContent: "space-between" }}>
   <strong>{job.title}</strong>
-  <br />
-  <small>{job.location}</small>
+
+  {job.source === "external" && (
+    <span className="external-badge">
+      External
+    </span>
+  )}
+</div>
+
+<small>{job.location}</small>
+ 
 </Link>
     ))
     
@@ -261,9 +270,17 @@ function Dashboard() {
   to={`${basePath}/internships`}
   className="recent-item"
 >
+  <div style={{ display: "flex", justifyContent: "space-between" }}>
   <strong>{internship.title}</strong>
-  <br />
-  <small>{internship.location}</small>
+
+  {internship.source === "external" && (
+    <span className="external-badge">
+      External
+    </span>
+  )}
+</div>
+
+<small>{internship.location}</small>
 </Link>
     ))
   )}

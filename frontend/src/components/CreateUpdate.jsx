@@ -129,7 +129,7 @@ function CreateUpdate({ fetchUpdates }) {
      // }
 
       await axios.post(
-        "https://mentorly-backend-9x4x.onrender.com/api/updates",
+        `${import.meta.env.VITE_API_URL}/api/updates`,
         data,
         {
           headers: {

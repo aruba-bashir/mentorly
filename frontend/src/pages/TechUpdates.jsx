@@ -16,7 +16,7 @@ function TechUpdates() {
       console.log("Token being sent:", token); //  debug
 
       const res = await axios.get(
-        "https://mentorly-backend-9x4x.onrender.com/api/updates",
+        `${import.meta.env.VITE_API_URL}/api/updates`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

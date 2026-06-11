@@ -110,7 +110,7 @@ if (!email) {
 
     try {
       const response = await fetch(
-        "https://mentorly-backend-9x4x.onrender.com/api/auth/signup",
+        `${import.meta.env.VITE_API_URL}/api/auth/signup`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

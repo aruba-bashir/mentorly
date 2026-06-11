@@ -6,16 +6,22 @@ import {
   applyInternship,
   deleteInternship
 } from "../controllers/internshipController.js";
-
+import { importInternships } from "../controllers/importController.js";
+import { importAuth } from "../middleware/importAuth.js";
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 
-router.get("/", protect, getAllInternships);
+
 
 router.post("/", protect, createInternship);
-
+router.post(
+  "/import",
+  importAuth,
+  importInternships
+);
+router.get("/", protect, getAllInternships);
 router.post("/:id/apply", protect, applyInternship);
 
 router.delete("/:id", protect, deleteInternship);

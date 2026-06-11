@@ -18,7 +18,7 @@ export default function CreateJobForm() {
     e.preventDefault();
 
     await axios.post(
-      "https://mentorly-backend-9x4x.onrender.com/jobs/internal",
+      `${import.meta.env.VITE_API_URL}/api/jobs/internal`,
       form,
       {
         headers: {

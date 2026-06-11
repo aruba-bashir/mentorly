@@ -62,7 +62,7 @@ const handleChange = (e) => {
 
     try {
       const res = await fetch(
-       `https://mentorly-backend-9x4x.onrender.com/api/auth/reset-password/${token}`,
+       `${import.meta.env.VITE_API_URL}/api/auth/reset-password/${token}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -88,45 +88,7 @@ const handleChange = (e) => {
     }
   };
 
-  /*return (
-    <div className="auth-container">
-      <div className="auth-box">
-
-        <button className="back-btn" onClick={() => navigate(-1)}>
-          <FiArrowLeft size={16} /> Back
-        </button>
-
-        <h2>Reset Password</h2>
-        <p>Enter new password</p>
-
-       
-
-        <div className="password-field">
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder="New password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          <span onClick={() => setShowPassword(!showPassword)}>
-            {showPassword ? <FiEyeOff /> : <FiEye />}
-          </span>
-        </div>
-
-        <p className="password-hint">
-          Must be at least 8 characters, include a letter, number & special character
-        </p>
-
-        {error && <p className="error">{error}</p>}
-        {message && <p style={{ color: "green" }}>{message}</p>}
-
-        <button className="auth-btn" onClick={handleReset}>
-          Reset Password
-        </button>
-      </div>
-    </div>
-  ); */
+  
   return (
   <div className="page-container">
     <div

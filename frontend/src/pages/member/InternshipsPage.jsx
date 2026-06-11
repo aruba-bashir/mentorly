@@ -19,7 +19,7 @@ export default function InternshipsPage() {
 
   //  Fetch internships
   const fetchInternships = () => {
-    axios.get("https://mentorly-backend-9x4x.onrender.com/internships", {
+    axios.get(`${import.meta.env.VITE_API_URL}/internships`, {
       headers: { Authorization: `Bearer ${token}` },
       params: {
         search,
@@ -41,7 +41,7 @@ export default function InternshipsPage() {
   const applyInternship = async (id) => {
     try {
       await axios.post(
-        `https://mentorly-backend-9x4x.onrender.com/internships/${id}/apply`,
+        `${import.meta.env.VITE_API_URL}/internships/${id}/apply`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

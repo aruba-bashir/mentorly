@@ -44,7 +44,7 @@ const Webinars = () => {
     try {
 
       const res = await fetch(
-        "https://mentorly-backend-9x4x.onrender.com/api/webinars",
+        `${import.meta.env.VITE_API_URL}/api/webinars`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -329,8 +329,8 @@ const Webinars = () => {
 
         const url =
           editingWebinar
-            ? `https://mentorly-backend-9x4x.onrender.com/api/webinars/${editingWebinar._id}`
-            : "https://mentorly-backend-9x4x.onrender.com/api/webinars";
+            ? `${import.meta.env.VITE_API_URL}/api/webinars/${editingWebinar._id}`
+            : `${import.meta.env.VITE_API_URL}/api/webinars`;
 
         const method =
           editingWebinar
@@ -406,7 +406,7 @@ const Webinars = () => {
 
         const res =
           await fetch(
-            `https://mentorly-backend-9x4x.onrender.com/api/webinars/${id}`,
+            `${import.meta.env.VITE_API_URL}/api/webinars/${id}`,
             {
               method: "DELETE",
               headers: {

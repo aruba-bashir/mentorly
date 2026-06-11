@@ -1,4 +1,5 @@
-const API = "https://mentorly-backend-9x4x.onrender.com/api/admin/users";
+const API = 
+  `${import.meta.env.VITE_API_URL}/api/admin/users`;
 
 export const getUsers = async () => {
   const res = await fetch(API);

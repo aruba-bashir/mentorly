@@ -94,7 +94,7 @@ if (existingUser) {
   // resend verification mail
   
    const verifyLink =
-   `https://mentorly-bice.vercel.app/verify-email/${verifyToken}`;
+   `${process.env.FRONTEND_URL}/verify-email/${verifyToken}`;
 
   await sendEmail(
     email,
@@ -127,7 +127,7 @@ if (existingUser) {
     // Send email
     //const verifyLink = `http://localhost:5173/verify-email/${verifyToken}`;
     const verifyLink =
-   `https://mentorly-bice.vercel.app/verify-email/${verifyToken}`;
+   `${process.env.FRONTEND_URL}/verify-email/${verifyToken}`;
 
     await sendEmail(
       email,
@@ -266,7 +266,7 @@ if (!emailRegex.test(email)) {
 
     //const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
     const resetLink =
-   `https://mentorly-bice.vercel.app/reset-password/${resetToken}`;
+   `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
     await sendEmail(
       email,
       "Reset Password",

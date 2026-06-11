@@ -10,7 +10,7 @@ export default function AdminJobsPage() {
   // Fetch all jobs
   const fetchJobs = () => {
     axios
-      .get("https://mentorly-backend-9x4x.onrender.com/jobs", {
+      .get(`${import.meta.env.VITE_API_URL}/jobs`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setJobs(res.data))
@@ -24,7 +24,7 @@ export default function AdminJobsPage() {
   // Delete job (admin only)
   const deleteJob = async (id) => {
     try {
-      await axios.delete(`https://mentorly-backend-9x4x.onrender.com/jobs/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/jobs/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

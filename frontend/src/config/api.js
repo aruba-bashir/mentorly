@@ -1,2 +1,3 @@
-//export const API_BASE_URL = "https://mentorly-backend-9x4x.onrender.com/api";
-export const API_BASE_URL = "https://mentorly-backend-9x4x.onrender.com/api";
+
+export const API_BASE_URL =
+  `${import.meta.env.VITE_API_URL}/api`;

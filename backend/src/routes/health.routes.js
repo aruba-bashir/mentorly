@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/", (req, res) => {
   res.status(200).json({
     status: "ok",
-    message: "Mentorly backend is running 🚀"
+    message: "Mentorly backend is running "
   });
 });
 

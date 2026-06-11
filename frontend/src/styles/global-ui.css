@@ -520,6 +520,25 @@ body {
   color: #111827;
   transform: translateY(-2px);
 }
+/* Prevent long content from breaking mobile layouts */
+.card,
+p,
+span,
+small,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Preserve user-entered line breaks */
+.card p {
+  white-space: pre-wrap;
+}
 
 @keyframes fadeIn {
   from {
@@ -553,4 +572,18 @@ body {
   min-height: 55vh;
   padding-top: 40px;
 }
+}
+@media (max-width: 768px) {
+  .page-container {
+    padding: 14px;
+  }
+
+  .hero-title {
+    font-size: 38px;
+  }
+
+  .hero-section {
+    min-height: 55vh;
+    padding-top: 40px;
+  }
 }

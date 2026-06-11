@@ -1,227 +1,3 @@
-/*
-import { useEffect, useState } from "react";
-import { Pencil, Trash2 } from "lucide-react";
-import "./Profile.css";
-
-function Profile() {
-  
-  const [user, setUser] = useState(null);
-  const [editMode, setEditMode] = useState(false);
-  const [errors, setErrors] = useState({});
-  
-
-  const [formData, setFormData] = useState({
-    name: "",
-    bio: "",
-    skills: "",
-  });
-
-  const [file, setFile] = useState(null);
-  const token = localStorage.getItem("token");
-
-  // FETCH PROFILE
-  const fetchProfile = async () => {
-    const res = await fetch("https://mentorly-backend-9x4x.onrender.com/api/users/me", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    const data = await res.json();
-    setUser(data);
-
-    setFormData({
-      name: data.name || "",
-      bio: data.bio || "",
-      skills: Array.isArray(data.skills)
-        ? data.skills.join(", ")
-        : "",
-    });
-  };
-
-  useEffect(() => {
-    fetchProfile();
-  }, []);
-
-  // INPUT CHANGE
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // FILE CHANGE
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
-  // DELETE IMAGE (REAL DB DELETE FIX)
-  const handleDeleteImage = async () => {
-    const formDataToSend = new FormData();
-
-    formDataToSend.append("removeProfilePic", "true");
-
-    const res = await fetch(
-      "https://mentorly-backend-9x4x.onrender.com/api/users/update",
-      {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formDataToSend,
-      }
-    );
-
-    const data = await res.json();
-    setUser(data);
-  };
-
-  // UPDATE PROFILE
-  const handleUpdate = async () => {
-    const formDataToSend = new FormData();
-
-    formDataToSend.append("name", formData.name);
-    formDataToSend.append("bio", formData.bio);
-
-    formDataToSend.append(
-      "skills",
-      JSON.stringify(
-        formData.skills.split(",").map((s) => s.trim())
-      )
-    );
-
-    if (file) {
-      formDataToSend.append("profilePic", file);
-    }
-
-    const res = await fetch(
-      "https://mentorly-backend-9x4x.onrender.com/api/users/update",
-      {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formDataToSend,
-      }
-    );
-
-    const data = await res.json();
-    setUser(data);
-    setEditMode(false);
-    setFile(null);
-  };
-
-  if (!user) return <p>Loading...</p>;
-
-  return (
-    <div className="profile-container">
-      <div className="profile-card">
-        <h2>My Profile</h2>
-
-        {/* PROFILE IMAGE *
-        <div className="profile-img-wrapper">
-          <img
-            src={
-              user.profilePic
-                ? `https://mentorly-backend-9x4x.onrender.com/${user.profilePic}`
-                : `https://ui-avatars.com/api/?name=${user.name}`
-            }
-            className="profile-pic"
-            alt="profile"
-          />
-
-          {/* hidden input *
-          <input
-            type="file"
-            id="fileInput"
-            hidden
-            onChange={handleFileChange}
-          />
-
-          {/* EDIT ICON *
-          {editMode && (
-            <label htmlFor="fileInput" className="edit-icon">
-              <Pencil size={16} />
-            </label>
-          )}
-
-          {/* DELETE ICON *
-          {user.profilePic && editMode && (
-            <button
-              className="delete-icon"
-              onClick={handleDeleteImage}
-            >
-              <Trash2 size={16} />
-            </button>
-          )}
-        </div>
-
-        {/* VIEW MODE *
-        {!editMode ? (
-          <>
-            <div className="profile-info">
-              <p><strong>Name:</strong> {user.name}</p>
-              <p><strong>Email:</strong> {user.email}</p>
-              <p><strong>Role:</strong> {user.role}</p>
-              <p><strong>Bio:</strong> {user.bio || "No bio added"}</p>
-
-              <div className="skills">
-                <strong>Skills:</strong>
-
-                <div className="skill-tags">
-                  {Array.isArray(user.skills) &&
-                    user.skills.map((skill, i) => (
-                      <span key={i} className="skill-chip">
-                        {skill}
-                      </span>
-                    ))}
-                </div>
-              </div>
-            </div>
-
-            <button
-              className="edit-btn"
-              onClick={() => setEditMode(true)}
-            >
-              Edit
-            </button>
-          </>
-        ) : (
-          // EDIT MODE
-          <div className="edit-form">
-            <input
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Name"
-            />
-
-            <textarea
-              name="bio"
-              value={formData.bio}
-              onChange={handleChange}
-              placeholder="Bio"
-            />
-
-            <input
-              name="skills"
-              value={formData.skills}
-              onChange={handleChange}
-              placeholder="Skills (comma separated)"
-            />
-
-            <div className="btn-group">
-              <button onClick={handleUpdate}>Save</button>
-              <button onClick={() => setEditMode(false)}>
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-export default Profile; */
 
 
 import { useEffect, useState } from "react";
@@ -253,7 +29,7 @@ function Profile() {
     try {
 
       const res = await fetch(
-        "https://mentorly-backend-9x4x.onrender.com/api/users/me",
+        `${import.meta.env.VITE_API_URL}/api/users/me`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -486,7 +262,7 @@ setPreview(
     );
 
     const res = await fetch(
-      "https://mentorly-backend-9x4x.onrender.com/api/users/update",
+      `${import.meta.env.VITE_API_URL}/api/users/update`,
       {
         method: "PUT",
 
@@ -561,7 +337,7 @@ setPreview(
       }
 
       const res = await fetch(
-        "https://mentorly-backend-9x4x.onrender.com/api/users/update",
+        `${import.meta.env.VITE_API_URL}/api/users/update`,
         {
           method: "PUT",
           headers: {
@@ -611,7 +387,7 @@ setPreview(
   preview
     ? preview
     : user.profilePic
-    ? `https://mentorly-backend-9x4x.onrender.com/${user.profilePic}`
+    ? `${import.meta.env.VITE_API_URL}/${user.profilePic}`
     : `https://ui-avatars.com/api/?name=${user.name}`
 }
           

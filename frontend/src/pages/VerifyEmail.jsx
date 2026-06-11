@@ -17,7 +17,7 @@ function VerifyEmail() {
     const verify = async () => {
       try {
         const res = await fetch(
-          `https://mentorly-backend-9x4x.onrender.com/api/auth/verify-email/${token}`
+          `${import.meta.env.VITE_API_URL}/api/auth/verify-email/${token}`
         );
 
         const data = await res.json();

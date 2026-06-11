@@ -159,6 +159,9 @@
   transition: var(--transition);
 
   font-weight: 500;
+  
+  margin-top: auto;
+
 }
 
 .logout-btn:hover {
@@ -225,6 +228,8 @@
     overflow-x: auto;
 
     gap: 10px;
+    scrollbar-width: thin;
+      padding-bottom: 8px;
   }
 
   .sidebar nav {

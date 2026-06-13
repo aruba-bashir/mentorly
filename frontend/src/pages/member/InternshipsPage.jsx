@@ -123,7 +123,12 @@ export default function InternshipsPage() {
           <p>
             {internship.description}
           </p>
-
+           <p className="text-muted">
+  <b>Posted by:</b>{" "}
+  {internship.source === "external"
+    ? "External"
+    : "Internal"}
+</p>
           <p className="text-muted">
             Applicants: {internship.applicants?.length || 0}
           </p>

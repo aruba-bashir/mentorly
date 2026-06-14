@@ -53,6 +53,7 @@ export default function MemberJobsPage() {
 
     } catch (err) {
       alert(err.response?.data?.message || "Error");
+    
     }
   };
 
@@ -156,7 +157,7 @@ export default function MemberJobsPage() {
     Apply 
   </a>
 ) : job.applicants?.some(
-    id => id.toString() === req.user._id
+    id => id.toString() === userId
   ) ? (
   <button className="btn btn-outline" disabled>
     Applied

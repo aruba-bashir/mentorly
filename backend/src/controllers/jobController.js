@@ -219,12 +219,15 @@ export const applyJob = async (req, res) => {
       message: "Applied successfully",
     });
 
-  } catch (error) {
+  } 
+  catch (error) {
     res.status(500).json({
       error: error.message,
     });
-  }
+  } 
+ 
 };
+
 
 // DELETE JOB
 export const deleteJob = async (req, res) => {

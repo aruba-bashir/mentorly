@@ -7,7 +7,10 @@ const internshipSchema = new mongoose.Schema(
   location: { type: String, required: true },
   stipend: { type: String, required: true },
   description: { type: String, required: true },
-
+  applyLink: {
+  type: String,
+  default: "",
+},
   created_by: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

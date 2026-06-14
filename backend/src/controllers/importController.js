@@ -57,9 +57,29 @@ export const importInternships = async (req, res) => {
       });
     }
 
+    const internshipKeywords = [
+      "intern",
+      "internship",
+      "junior",
+      "graduate",
+      "entry level",
+      "entry-level",
+      "trainee",
+      "apprentice",
+      "fresher",
+    ];
+
     let imported = 0;
 
     for (const internship of internships) {
+      const title = internship.title?.toLowerCase() || "";
+
+      const isInternshipLike = internshipKeywords.some(
+        (keyword) => title.includes(keyword)
+      );
+
+      if (!isInternshipLike) continue;
+
       const exists = await Internship.findOne({
         title: internship.title,
         company: internship.company,
@@ -69,12 +89,12 @@ export const importInternships = async (req, res) => {
 
       await Internship.create({
         title: internship.title,
-        company: internship.company,
+        company: internship.company || "Unknown Company",
         location: internship.location || "Remote",
         stipend: internship.stipend || "Not Disclosed",
         description:
-          internship.description ||
-          "No description available",
+          internship.description || "No description available",
+        applyLink: internship.applyLink || "",
         source: "external",
         applicants: [],
         created_by: null,

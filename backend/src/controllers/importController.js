@@ -79,7 +79,7 @@ export const importInternships = async (req, res) => {
         (keyword) => title.includes(keyword)
       );
 
-      if (!isInternshipLike) continue;
+      //if (!isInternshipLike) continue;
 
       const exists = await Internship.findOne({
         title: internship.title,

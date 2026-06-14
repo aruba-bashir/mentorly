@@ -156,7 +156,7 @@ export default function MemberJobsPage() {
     Apply 
   </a>
 ) : job.applicants?.some(
-    id => id.toString() === userId
+    id => id.toString() === req.user._id
   ) ? (
   <button className="btn btn-outline" disabled>
     Applied

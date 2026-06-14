@@ -106,6 +106,13 @@ export default function MemberJobsPage() {
 
           <h3>{job.title}</h3>
 
+         
+
+{job.source === "external" && (
+  <p className="text-muted">
+     External Opportunity
+  </p>
+)}
            <p className="text-muted">
             <b>Company:</b> {job.company}
           </p>
@@ -129,24 +136,40 @@ export default function MemberJobsPage() {
               : "External"}
           </p>
 
-          <p className="text-muted">
-            <b>Applicants:</b> {job.applicants?.length || 0}
-          </p>
+         {job.source === "internal" && (
+  <p className="text-muted">
+    <b>Applicants:</b> {job.applicants?.length || 0}
+  </p>
+)}
+
+
+
 
           {/* APPLY BUTTON */}
-          {job.applicants?.some(id => id.toString() === userId) ? (
-            <button className="btn btn-outline" disabled>
-              Applied
-            </button>
-          ) : (
-            <button
-              className="btn btn-primary"
-              onClick={() => applyJob(job._id)}
-            >
-              Apply
-            </button>
-          )}
-
+         {job.source === "external" ? (
+  <a
+    href={job.applyLink}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="btn btn-primary"
+  >
+    Apply 
+  </a>
+) : job.applicants?.some(
+    id => id.toString() === userId
+  ) ? (
+  <button className="btn btn-outline" disabled>
+    Applied
+  </button>
+) : (
+  <button
+    className="btn btn-primary"
+    onClick={() => applyJob(job._id)}
+  >
+    Apply
+  </button>
+)}
+         
         </div>
       ))}
 

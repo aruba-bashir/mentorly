@@ -27,6 +27,7 @@ export const importJobs = async (req, res) => {
         location: job.location || "Remote",
         salary: job.salary || "Not Disclosed",
         description: job.description || "No description available",
+        applyLink: job.applyLink || "",
         source: "external",
         applicants: [],
         created_by: null,

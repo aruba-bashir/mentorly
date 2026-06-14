@@ -129,23 +129,42 @@ export default function InternshipsPage() {
     ? "External"
     : "Internal"}
 </p>
-          <p className="text-muted">
-            Applicants: {internship.applicants?.length || 0}
-          </p>
-
+{internship.source !== "external" && (
+  <p className="text-muted">
+    Applicants: {internship.applicants?.length || 0}
+  </p>
+)}
+       
           {/* APPLY BUTTON */}
-          {internship.applicants?.includes(userId) ? (
-            <button className="btn btn-outline" disabled>
-              Applied
-            </button>
-          ) : (
-            <button
-              className="btn btn-primary"
-              onClick={() => applyInternship(internship._id)}
-            >
-              Apply
-            </button>
-          )}
+
+{internship.source === "external" ? (
+
+  <button
+    className="btn btn-primary"
+    onClick={() =>
+      window.open(internship.applyLink, "_blank")
+    }
+  >
+    Apply on Website
+  </button>
+
+) : internship.applicants?.includes(userId) ? (
+
+  <button className="btn btn-outline" disabled>
+    Applied
+  </button>
+
+) : (
+
+  <button
+    className="btn btn-primary"
+    onClick={() => applyInternship(internship._id)}
+  >
+    Apply
+  </button>
+
+)}
+         
 
         </div>
 

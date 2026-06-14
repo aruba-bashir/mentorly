@@ -48,7 +48,7 @@ export const importJobs = async (req, res) => {
   }
 };
 export const importInternships = async (req, res) => {
-  console.log(req.body);
+  
   try {
     const internships = req.body;
 

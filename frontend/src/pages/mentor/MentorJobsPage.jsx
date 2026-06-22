@@ -2,9 +2,10 @@
   import { useEffect, useState } from "react";
   import axios from "axios";
   import "/src/styles/internships.css";
- export default function MentorJobsPage() {
+  export default function MentorJobsPage() {
 
   const [jobs, setJobs] = useState([]);
+  const [recommendedJobs, setRecommendedJobs] = useState([]);
 
   const [title, setTitle] = useState("");
   const [company, setCompany] = useState("");
@@ -53,9 +54,26 @@
         setJobs([]);
       });
   };
+  const fetchRecommendedJobs = async () => {
+  try {
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_URL}/api/recommendations/jobs`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
+    setRecommendedJobs(res.data);
+
+  } catch (err) {
+    console.error(err);
+  }
+};
   useEffect(() => {
     fetchJobs();
+    fetchRecommendedJobs();
     setCurrentPage(1);
   }, []);
 
@@ -325,8 +343,23 @@
       );
     }
   };
-  const totalPages = Math.ceil(
-  jobs.length / itemsPerPage
+    
+
+  const cleanDescription = (description) =>
+  description?.replace(/\s+/g, " ").trim() || "";
+
+  const recommendedIds = new Set(
+  recommendedJobs.map(job => job._id)
+);
+
+const orderedJobs = [
+  ...recommendedJobs,
+  ...jobs.filter(
+    job => !recommendedIds.has(job._id)
+  )
+];
+const totalPages = Math.ceil(
+  orderedJobs.length / itemsPerPage
 );
 
 const indexOfLastItem =
@@ -336,13 +369,10 @@ const indexOfFirstItem =
   indexOfLastItem - itemsPerPage;
 
 const currentJobs =
-  jobs.slice(
+   orderedJobs.slice(
     indexOfFirstItem,
     indexOfLastItem
-  );  
-
-  const cleanDescription = (description) =>
-  description?.replace(/\s+/g, " ").trim() || "";
+  );
   
  return (
   <div className="page-container">
@@ -415,7 +445,7 @@ const currentJobs =
     <hr />
 
     {/* JOB LIST */}
-    {jobs.length === 0 ? (
+    {orderedJobs.length === 0 ? (
       <p className="text-muted">No Jobs available</p>
     ) : (
       <div className="grid internship-list">
@@ -436,6 +466,12 @@ const currentJobs =
             <div key={job._id} className="card">
 
               <h3>{job.title}</h3>
+
+              {recommendedIds.has(job._id) && (
+         <p style={{ color: "green" }}>
+         Recommended
+          </p>
+          )}
               
               {job.source === "external" && (
 

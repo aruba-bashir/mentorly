@@ -155,7 +155,7 @@ const currentJobs =
     </div>
 
     {/* EMPTY STATE */}
-    {jobs.length === 0 && (
+    {orderedJobs.length === 0 && (
       <p className="text-muted">No Jobs available</p>
     )}
 

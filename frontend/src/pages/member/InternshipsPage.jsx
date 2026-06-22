@@ -6,7 +6,7 @@ import "/src/styles/internships.css";
 export default function InternshipsPage() {
 
   const [internships, setInternships] = useState([]);
-
+  const [recommendedInternships, setRecommendedInternships] = useState([]);
   // Search states
   const [search, setSearch] = useState("");
   const [company, setCompany] = useState("");
@@ -36,10 +36,28 @@ export default function InternshipsPage() {
     .then(res => setInternships(res.data))
     .catch(err => console.error(err));
   };
+  // fetch recomm internships
+  const fetchRecommendedInternships = async () => {
+  try {
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_URL}/api/recommendations/internships`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
+    setRecommendedInternships(res.data);
+
+  } catch (err) {
+    console.error(err);
+  }
+};
   //  Auto fetch when filters change
   useEffect(() => {
     fetchInternships();
+    fetchRecommendedInternships();
     setCurrentPage(1);
   }, [search, company ,location, stipend]);
 
@@ -59,8 +77,35 @@ export default function InternshipsPage() {
       alert(err.response?.data?.message || "Error");
     }
   };
-  const totalPages = Math.ceil(
-  internships.length / itemsPerPage
+ 
+  const cleanDescription = (description) =>
+  description?.replace(/\s+/g, " ").trim() || "";
+
+  const recommendedIds = new Set(
+  recommendedInternships.map(
+    internship => internship._id
+  )
+);
+
+const hasFilters =
+  search ||
+  company ||
+  location ||
+  stipend;
+
+const orderedInternships = hasFilters
+  ? internships
+  : [
+      ...recommendedInternships,
+      ...internships.filter(
+        internship =>
+          !recommendedIds.has(
+            internship._id
+          )
+      ),
+    ];
+   const totalPages = Math.ceil(
+  orderedInternships.length / itemsPerPage
 );
 
 const indexOfLastItem =
@@ -70,13 +115,10 @@ const indexOfFirstItem =
   indexOfLastItem - itemsPerPage;
 
 const currentInternships =
-  internships.slice(
+  orderedInternships.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
-
-  const cleanDescription = (description) =>
-  description?.replace(/\s+/g, " ").trim() || "";
   return (
   <div className="page-container">
 
@@ -116,7 +158,7 @@ const currentInternships =
     </div>
 
     {/* EMPTY STATE */}
-    {internships.length === 0 && (
+    {orderedInternships.length === 0 && (
       <p className="text-muted">No internships available</p>
     )}
 
@@ -128,6 +170,13 @@ const currentInternships =
         <div className="card" key={internship._id}>
 
           <h3>{internship.title}</h3>
+
+          {recommendedIds.has(internship._id) && (
+         <p style={{ color: "green" }}>
+         Recommended
+          </p>
+          )}
+
          
          {internship.source === "external" && (
 

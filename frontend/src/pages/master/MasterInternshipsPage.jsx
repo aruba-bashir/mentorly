@@ -7,6 +7,7 @@ import "/src/styles/internships.css";
 export default function MasterInternshipsPage() {
 
   const [internships, setInternships] = useState([]);
+  const [recommendedInternships, setRecommendedInternships] = useState([]);
 
   const [title, setTitle] = useState("");
   const [company, setCompany] = useState("");
@@ -63,9 +64,26 @@ export default function MasterInternshipsPage() {
         setInternships([]);
       });
   };
+  const fetchRecommendations = async () => {
+  try {
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_URL}/api/recommendations/internships`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
+    setRecommendedInternships(res.data);
+
+  } catch (err) {
+    console.error(err);
+  }
+};
   useEffect(() => {
     fetchInternships();
+    fetchRecommendations();
     setCurrentPage(1);
   }, []);
 
@@ -350,8 +368,24 @@ export default function MasterInternshipsPage() {
       );
     }
   };
+  const recommendedIds = new Set(
+  recommendedInternships.map(
+    internship => internship._id
+  )
+);
+const orderedInternships = [
+  ...recommendedInternships,
+
+  ...internships.filter(
+    internship =>
+      !recommendedInternships.some(
+        rec => rec._id === internship._id
+      )
+  ),
+];
+
   const totalPages = Math.ceil(
-  internships.length / itemsPerPage
+  orderedInternships.length / itemsPerPage
 );
 
 const indexOfLastItem =
@@ -361,7 +395,7 @@ const indexOfFirstItem =
   indexOfLastItem - itemsPerPage;
 
 const currentInternships =
-  internships.slice(
+  orderedInternships.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
@@ -440,7 +474,7 @@ const currentInternships =
     {/* LIST */}
     <div className="grid internship-list">
 
-      {internships.length === 0 ? (
+      {orderedInternships.length === 0 ? (
         <p className="text-muted">No internships available</p>
       ) : (
        currentInternships.map((internship) => {
@@ -459,6 +493,12 @@ const canDelete =
             <div key={internship._id} className="card internship-card">
 
               <h3>{internship.title}</h3>
+
+              {recommendedIds.has(internship._id) && (
+  <p style={{ color: "green" }}>
+    Recommended
+  </p>
+)}
               {internship.source === "external" && (
 
         <p className="text-muted">

@@ -7,7 +7,7 @@ export default function MasterJobsPage() {
 
   const [jobs, setJobs] = useState([]);
 
-  
+  const [recommendedJobs, setRecommendedJobs] = useState([]);
   const [title, setTitle] = useState("");
   const [company, setCompany] = useState("");
   const [location, setLocation] = useState("");
@@ -51,9 +51,26 @@ export default function MasterJobsPage() {
         setJobs([]);
       });
   };
+ const fetchRecommendations = async () => {
+  try {
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_URL}/api/recommendations/jobs`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
+    setRecommendedJobs(res.data);
+
+  } catch (err) {
+    console.error(err);
+  }
+};
   useEffect(() => {
     fetchJobs();
+    fetchRecommendations();
     setCurrentPage(1);
   }, []);
 
@@ -284,8 +301,22 @@ export default function MasterJobsPage() {
       console.error("Delete Error:", err);
     }
   };
+
+  const recommendedIds = new Set(
+  recommendedJobs.map(job => job._id)
+);
+const orderedJobs = [
+  ...recommendedJobs,
+
+  ...jobs.filter(
+    job =>
+      !recommendedJobs.some(
+        rec => rec._id === job._id
+      )
+  ),
+];
    const totalPages = Math.ceil(
-  jobs.length / itemsPerPage
+  orderedJobs.length / itemsPerPage
 );
 
 const indexOfLastItem =
@@ -295,7 +326,7 @@ const indexOfFirstItem =
   indexOfLastItem - itemsPerPage;
 
 const currentJobs =
-  jobs.slice(
+  orderedJobs.slice(
     indexOfFirstItem,
     indexOfLastItem
   );  
@@ -375,7 +406,7 @@ const currentJobs =
     <hr />
 
     {/* JOB LIST */}
-    {jobs.length === 0 ? (
+    {orderedJobs.length === 0 ? (
       <p className="text-muted">No Jobs available</p>
     ) : (
       <div className="grid internship-list">
@@ -396,6 +427,12 @@ const currentJobs =
             <div key={job._id} className="card">
 
               <h3>{job.title}</h3>
+
+              {recommendedIds.has(job._id) && (
+             <p style={{ color: "green" }}>
+             Recommended
+             </p>
+             )}
 
               {job.source === "external" && (
 

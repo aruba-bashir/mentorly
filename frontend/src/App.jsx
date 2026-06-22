@@ -42,6 +42,7 @@ import AdminDashboard from "./pages/Dashboard";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminJobsPage from "./pages/admin/AdminJobsPage";
 import AdminInternshipsPage from "./pages/admin/AdminInternshipsPage";
+import AdminUserProfile from "./pages/admin/AdminUserProfile";
 //import AdminWebinarsPage from "./pages/admin/AdminWebinarsPage";
 // Others
 import IncomingRequests from "./pages/IncomingRequests";
@@ -157,7 +158,10 @@ function App() {
 
   <Route path="profile" element={<Profile />} />
   <Route path="users" element={<AdminUsers />} />
-
+  <Route
+  path="/admin/user/:id"
+  element={<AdminUserProfile />}
+/>
   {/* REUSE EXISTING FEATURES */}
   <Route path="qna" element={<QnA />} />
   <Route path="question/:id" element={<QuestionDetail />} />

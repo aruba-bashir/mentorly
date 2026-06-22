@@ -1,79 +1,11 @@
-/*import React from "react";
 
-const UserTable = ({ users, onDelete, onToggleBlock }) => {
-  return (
-    <table border="1" cellPadding="10" width="100%">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {users.map((user) => (
-          <tr key={user._id}>
-            <td>{user.name}</td>
-            <td>{user.email}</td>
-
-           <td>
-  <span
-    style={{
-      padding: "3px 8px",
-      borderRadius: "5px",
-      fontWeight: "500",
-      color: "#333",
-      background:
-        user.role === "admin"
-          ? "#ffdddd"
-          : user.role === "mentor"
-          ? "#ddf0ff"
-          : user.role === "master"
-          ? "#ffe9b3"
-          : user.role === "member"
-          ? "#e6ffe6"
-          : "#eee",
-    }}
-  >
-    {user.role}
-  </span>
-</td>
-
-            <td>
-              {user.isBlocked ? (
-                <span style={{ color: "red" }}>Blocked</span>
-              ) : (
-                <span style={{ color: "green" }}>Active</span>
-              )}
-            </td>
-
-            <td>
-              <button onClick={() => onToggleBlock(user._id)}>
-                {user.isBlocked ? "Unblock" : "Block"}
-              </button>
-
-              <button
-                onClick={() => onDelete(user._id)}
-                style={{ marginLeft: "10px", color: "red" }}
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-};
-
-export default UserTable; */
 
 import React from "react";
 
+import { useNavigate } from "react-router-dom";
+
 const UserTable = ({ users, onDelete, onToggleBlock }) => {
+    const navigate = useNavigate();
   return (
     <div className="grid">
 
@@ -136,6 +68,14 @@ const UserTable = ({ users, onDelete, onToggleBlock }) => {
               Delete
             </button>
 
+            <button
+  className="btn btn-outline"
+  onClick={() =>
+    navigate(`/admin/user/${user._id}`)
+  }
+>
+  View Profile
+</button>
           </div>
 
         </div>

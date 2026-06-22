@@ -1,45 +1,4 @@
-/*import React from "react";
 
-const UserStats = ({ users }) => {
-  const total = users.length;
-  const blocked = users.filter((u) => u.isBlocked).length;
-  const active = total - blocked;
-
-  const rolesCount = {
-    member: users.filter((u) => u.role === "member").length,
-    mentor: users.filter((u) => u.role === "mentor").length,
-    master: users.filter((u) => u.role === "master").length,
-    admin: users.filter((u) => u.role === "admin").length,
-  };
-
-  return (
-    <div style={{ display: "flex", gap: "15px", marginBottom: "20px" }}>
-      <Card title="Total Users" value={total} />
-      <Card title="Active" value={active} />
-      <Card title="Blocked" value={blocked} />
-      <Card title="Admins" value={rolesCount.admin} />
-      <Card title="Masters" value={rolesCount.master} />
-       <Card title="Mentors" value={rolesCount.mentor} />
-      <Card title="Members" value={rolesCount.member} />
-    </div>
-  );
-};
-
-const Card = ({ title, value }) => (
-  <div
-    style={{
-      padding: "15px",
-      border: "1px solid #ddd",
-      borderRadius: "8px",
-      minWidth: "120px",
-    }}
-  >
-    <h4>{title}</h4>
-    <h2>{value}</h2>
-  </div>
-);
-
-export default UserStats;*/
 import React from "react";
 
 const UserStats = ({ users }) => {

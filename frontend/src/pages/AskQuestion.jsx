@@ -1,7 +1,7 @@
 
 
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate , useNavigate,} from "react-router-dom";
 
 function AskQuestion() {
 
@@ -9,6 +9,7 @@ function AskQuestion() {
   const [description, setDescription] = useState("");
 
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
 
@@ -217,6 +218,12 @@ function AskQuestion() {
   return (
 
    <div className="qna-container">
+    <button
+        className="back-btn"
+         onClick={() => navigate(-1)}
+          >
+          ← Back
+         </button>
      <div className="qna-form">
 
       <h2>Ask a Question</h2>

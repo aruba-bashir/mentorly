@@ -16,6 +16,10 @@ export default function MasterInternshipsPage() {
 
   const [errors, setErrors] = useState({});
 
+  const [showFull, setShowFull] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 6;
   const token = localStorage.getItem("token");
 
   const decoded = token
@@ -62,6 +66,7 @@ export default function MasterInternshipsPage() {
 
   useEffect(() => {
     fetchInternships();
+    setCurrentPage(1);
   }, []);
 
   // HANDLE INPUT
@@ -345,7 +350,24 @@ export default function MasterInternshipsPage() {
       );
     }
   };
+  const totalPages = Math.ceil(
+  internships.length / itemsPerPage
+);
 
+const indexOfLastItem =
+  currentPage * itemsPerPage;
+
+const indexOfFirstItem =
+  indexOfLastItem - itemsPerPage;
+
+const currentInternships =
+  internships.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+  
+  const cleanDescription = (description) =>
+  description?.replace(/\s+/g, " ").trim() || "";
   
   return (
   <div className="page-container">
@@ -421,7 +443,7 @@ export default function MasterInternshipsPage() {
       {internships.length === 0 ? (
         <p className="text-muted">No internships available</p>
       ) : (
-        internships.map((internship) => {
+       currentInternships.map((internship) => {
 
           const creatorId =
   typeof internship.created_by === "object"
@@ -437,7 +459,13 @@ const canDelete =
             <div key={internship._id} className="card internship-card">
 
               <h3>{internship.title}</h3>
-     
+              {internship.source === "external" && (
+
+        <p className="text-muted">
+           External Opportunity
+          </p>
+         )}
+
             
              <p className="text-muted">
                 <b>Company:</b> {internship.company}
@@ -447,15 +475,12 @@ const canDelete =
                 <b>Location:</b> {internship.location}
               </p>
 
-              <p className="text-muted">
-                <b>Stipend:</b> {internship.stipend}
-              </p>
-
-              <p className="desc">
-                <b>Description:</b> {internship.description}
-              </p>
-
-              <p className="meta">
+             {internship.source !== "external" && (
+  <p>
+    <b>Stipend:</b> {internship.stipend}
+  </p>
+)}
+<p className="meta">
                 <b>Posted by:</b>{" "}
                 {internship.created_by?.role &&
                 internship.created_by?.name
@@ -463,12 +488,30 @@ const canDelete =
                   : "External"}
               </p>
 
-              <p className="meta">
-                <b>Applicants:</b>{" "}
-                {Array.isArray(internship.applicants)
-                  ? internship.applicants.length
-                  : 0}
-              </p>
+              {internship.source !== "external" && (
+  <p className="text-muted">
+    Applicants: {internship.applicants?.length || 0}
+  </p>
+)}
+            <p className="description">
+  {showFull[internship._id]
+    ? cleanDescription(internship.description)
+    : cleanDescription(internship.description).slice(0, 300) + "..."}
+</p> 
+
+<button
+  className="btn btn-outline"
+  onClick={() =>
+    setShowFull(prev => ({
+      ...prev,
+      [internship._id]: !prev[internship._id]
+    }))
+  }
+>
+  {showFull[internship._id] ? "Show Less" : "Read More"}
+</button>
+
+              
 
               {canDelete && (
                 <button
@@ -487,6 +530,34 @@ const canDelete =
       )}
 
     </div>
+
+    {totalPages > 1 && (
+  <div className="pagination">
+
+    <button
+      disabled={currentPage === 1}
+      onClick={() =>
+        setCurrentPage(currentPage - 1)
+      }
+    >
+      Previous
+    </button>
+
+    <span className="page-info">
+      Page {currentPage} of {totalPages}
+    </span>
+
+    <button
+      disabled={currentPage === totalPages}
+      onClick={() =>
+        setCurrentPage(currentPage + 1)
+      }
+    >
+      Next
+    </button>
+
+  </div>
+)}
   </div>
 );
 }

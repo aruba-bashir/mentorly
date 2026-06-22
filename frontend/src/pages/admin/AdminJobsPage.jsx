@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import "/src/styles/internships.css";
 export default function AdminJobsPage() {
   const [jobs, setJobs] = useState([]);
+  const [showFull, setShowFull] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user")); // IMPORTANT (don’t decode JWT)
@@ -19,6 +22,7 @@ export default function AdminJobsPage() {
 
   useEffect(() => {
     fetchJobs();
+    setCurrentPage(1);
   }, []);
 
   // Delete job (admin only)
@@ -35,6 +39,24 @@ export default function AdminJobsPage() {
     }
   };
 
+ const totalPages = Math.ceil(
+  jobs.length / itemsPerPage
+);
+
+const indexOfLastItem =
+  currentPage * itemsPerPage;
+
+const indexOfFirstItem =
+  indexOfLastItem - itemsPerPage;
+
+const currentJobs =
+  jobs.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  ); 
+  
+  const cleanDescription = (description) =>
+  description?.replace(/\s+/g, " ").trim() || "";
 
   return (
   <div className="page-container">
@@ -45,14 +67,21 @@ export default function AdminJobsPage() {
       <p className="text-muted">No jobs found</p>
     )}
 
-    <div className="grid">
+    <div className="grid internship-list">
 
-      {jobs.map((job) => (
+      {currentJobs.map((job) => (
 
         <div key={job._id} className="card">
 
           <h3>{job.title}</h3>
-          
+
+
+          {job.source === "external" && (
+
+        <p className="text-muted">
+           External Opportunity
+          </p>
+         )}
            <p className="text-muted">
             <b>Company:</b> {job.company}
           </p>
@@ -61,25 +90,44 @@ export default function AdminJobsPage() {
             <b>Location:</b> {job.location}
           </p>
 
-          <p className="text-muted">
-            <b>Salary:</b> {job.salary}
-          </p>
+        {job.source !== "external" && (
+  <p className="text-muted">
+    <b>Salary:</b> {job.salary}
+  </p>
+)}
 
-          <p style={{ whiteSpace: "pre-line" }}>
-            <b>Description:</b> {job.description}
-          </p>
-
-          <p className="text-muted">
+<p className="text-muted">
             <b>Posted by:</b>{" "}
             {job.created_by
               ? `${job.created_by.role} (${job.created_by.name})`
               : "External"}
           </p>
-
+          
+          {job.source !== "external" && (
           <p className="text-muted">
-            <b>Applicants:</b> {job.applicants?.length || 0}
+          Applicants: {job.applicants?.length || 0}
           </p>
+          )}
+<p className="description">
+  {showFull[job._id]
+    ? cleanDescription(job.description)
+    : cleanDescription(job.description).slice(0, 300) + "..."}
+</p> 
+         
+<button
+  className="btn btn-outline"
+  onClick={() =>
+    setShowFull(prev => ({
+      ...prev,
+      [job._id]: !prev[job._id]
+    }))
+  }
+>
+  {showFull[job._id] ? "Show Less" : "Read More"}
+</button>
 
+          
+         
           {/* ADMIN ACTION */}
           <button
             onClick={() => deleteJob(job._id)}
@@ -91,6 +139,34 @@ export default function AdminJobsPage() {
         </div>
       ))}
     </div>
+
+    {totalPages > 1 && (
+  <div className="pagination">
+
+    <button
+      disabled={currentPage === 1}
+      onClick={() =>
+        setCurrentPage(currentPage - 1)
+      }
+    >
+      Previous
+    </button>
+
+    <span className="page-info">
+      Page {currentPage} of {totalPages}
+    </span>
+
+    <button
+      disabled={currentPage === totalPages}
+      onClick={() =>
+        setCurrentPage(currentPage + 1)
+      }
+    >
+      Next
+    </button>
+
+  </div>
+)}
   </div>
 );
 }

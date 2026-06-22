@@ -1,6 +1,6 @@
 export const memberMenu = [
 
-  { name: "Dashboard", path: "/dashboard" },
+  { name: "Dashboard", path: "/member" },
   { name: "Profile", path: "/member/profile" },
   { name: "Q&A", path: "/member/qna" },
  // { name: "Resources", path: "/member/resources" },
@@ -12,7 +12,7 @@ export const memberMenu = [
 ];
 
 export const mentorMenu = [
-  { name: "Dashboard", path: "/dashboard" },
+  { name: "Dashboard", path: "/mentor" },
   { name: "Profile", path: "/mentor/profile" },
   { name: "Q&A", path: "/mentor/qna" },
   { name: "Internships", path: "/mentor/internships" },
@@ -23,7 +23,7 @@ export const mentorMenu = [
 ];
 
 export const masterMenu = [
-  { name: "Dashboard", path: "/dashboard" },
+  { name: "Dashboard", path: "/master" },
   { name: "Profile", path: "/master/profile" },
   { name: "Q&A ", path: "/master/qna" },
   { name: "Internships", path: "/master/internships" },

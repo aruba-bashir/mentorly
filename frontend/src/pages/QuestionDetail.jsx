@@ -1,13 +1,16 @@
 
 import { useEffect, useState } from "react";
 
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { Trash2 } from "lucide-react";
 
-function QuestionDetail() {
 
+function QuestionDetail() {
+ 
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   const [answers, setAnswers] = useState([]);
 
@@ -240,6 +243,12 @@ function QuestionDetail() {
   return (
 
           <div className="qna-container">
+            <button
+                  className="back-btn"
+                  onClick={() => navigate(-1)}
+                   >
+                  ← Back
+                   </button>
              <div className="answers-list">
                <h2>Answers</h2>
 

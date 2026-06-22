@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "/src/styles/internships.css";
+
 export default function InternshipsPage() {
 
   const [internships, setInternships] = useState([]);
@@ -12,6 +13,10 @@ export default function InternshipsPage() {
 
   const [location, setLocation] = useState("");
   const [stipend, setStipend] = useState("");
+  //other states ....
+  const [showFull, setShowFull] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
   const token = localStorage.getItem("token");
   const decoded = token ? JSON.parse(atob(token.split(".")[1])) : null;
@@ -35,6 +40,7 @@ export default function InternshipsPage() {
   //  Auto fetch when filters change
   useEffect(() => {
     fetchInternships();
+    setCurrentPage(1);
   }, [search, company ,location, stipend]);
 
   //  Apply internship
@@ -53,8 +59,24 @@ export default function InternshipsPage() {
       alert(err.response?.data?.message || "Error");
     }
   };
+  const totalPages = Math.ceil(
+  internships.length / itemsPerPage
+);
 
-  
+const indexOfLastItem =
+  currentPage * itemsPerPage;
+
+const indexOfFirstItem =
+  indexOfLastItem - itemsPerPage;
+
+const currentInternships =
+  internships.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const cleanDescription = (description) =>
+  description?.replace(/\s+/g, " ").trim() || "";
   return (
   <div className="page-container">
 
@@ -99,13 +121,20 @@ export default function InternshipsPage() {
     )}
 
     {/* LIST */}
-    <div className="grid">
+    <div className="grid internship-list">
 
-      {internships.map((internship) => (
+      {currentInternships.map((internship) => (
 
         <div className="card" key={internship._id}>
 
           <h3>{internship.title}</h3>
+         
+         {internship.source === "external" && (
+
+        <p className="text-muted">
+           External Opportunity
+          </p>
+         )}
 
           <p className="text-muted">
             {internship.company}
@@ -116,61 +145,119 @@ export default function InternshipsPage() {
             {internship.location}
           </p>
 
-          <p>
-            <b>Stipend:</b> {internship.stipend}
-          </p>
+         {internship.source !== "external" && (
+        <p>
+       <b>Stipend:</b> {internship.stipend}
+       </p>
+       )}
 
-          <p>
-            {internship.description}
-          </p>
-           <p className="text-muted">
+       <p className="description">
+  {showFull[internship._id]
+    ? cleanDescription(internship.description)
+    : cleanDescription(internship.description).slice(0, 300) + "..."}
+</p> 
+
+    <p className="text-muted">
   <b>Posted by:</b>{" "}
   {internship.source === "external"
     ? "External"
     : "Internal"}
 </p>
+
 {internship.source !== "external" && (
   <p className="text-muted">
     Applicants: {internship.applicants?.length || 0}
   </p>
 )}
-       
-          {/* APPLY BUTTON */}
 
-{internship.source === "external" ? (
+<div className="card-actions">
 
   <button
-    className="btn btn-primary"
+    className="btn btn-outline"
     onClick={() =>
-      window.open(internship.applyLink, "_blank")
+      setShowFull(prev => ({
+        ...prev,
+        [internship._id]: !prev[internship._id]
+      }))
     }
   >
-    Apply on Website
+    {showFull[internship._id]
+      ? "Show Less"
+      : "Read More"}
   </button>
 
-) : internship.applicants?.includes(userId) ? (
+  {internship.source === "external" ? (
 
-  <button className="btn btn-outline" disabled>
-    Applied
-  </button>
+    <button
+      className="btn btn-primary"
+      onClick={() =>
+        window.open(
+          internship.applyLink,
+          "_blank"
+        )
+      }
+    >
+      Apply on Website
+    </button>
 
-) : (
+  ) : internship.applicants?.includes(userId) ? (
 
-  <button
-    className="btn btn-primary"
-    onClick={() => applyInternship(internship._id)}
-  >
-    Apply
-  </button>
+    <button
+      className="btn btn-outline"
+      disabled
+    >
+      Applied
+    </button>
 
-)}
-         
+  ) : (
+
+    <button
+      className="btn btn-primary"
+      onClick={() =>
+        applyInternship(internship._id)
+      }
+    >
+      Apply
+    </button>
+
+  )}
+
+</div>
 
         </div>
 
       ))}
 
     </div>
+    
+   {totalPages > 1 && (
+  <div className="pagination">
+
+    <button
+      disabled={currentPage === 1}
+      onClick={() =>
+        setCurrentPage(currentPage - 1)
+      }
+    >
+      Previous
+    </button>
+
+    <span className="page-info">
+      Page {currentPage} of {totalPages}
+    </span>
+
+    <button
+      disabled={currentPage === totalPages}
+      onClick={() =>
+        setCurrentPage(currentPage + 1)
+      }
+    >
+      Next
+    </button>
+
+  </div>
+)}
+
   </div>
 );
 }

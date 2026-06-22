@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "/src/styles/internships.css";
 
 export default function MasterJobsPage() {
 
@@ -14,6 +15,9 @@ export default function MasterJobsPage() {
   const [description, setDescription] = useState("");
 
   const [errors, setErrors] = useState({});
+  const [showFull, setShowFull] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const token = localStorage.getItem("token");
 
@@ -50,6 +54,7 @@ export default function MasterJobsPage() {
 
   useEffect(() => {
     fetchJobs();
+    setCurrentPage(1);
   }, []);
 
   // HANDLE INPUT
@@ -279,6 +284,25 @@ export default function MasterJobsPage() {
       console.error("Delete Error:", err);
     }
   };
+   const totalPages = Math.ceil(
+  jobs.length / itemsPerPage
+);
+
+const indexOfLastItem =
+  currentPage * itemsPerPage;
+
+const indexOfFirstItem =
+  indexOfLastItem - itemsPerPage;
+
+const currentJobs =
+  jobs.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );  
+
+  const cleanDescription = (description) =>
+  description?.replace(/\s+/g, " ").trim() || "";
+
 
   return (
   <div className="page-container">
@@ -354,9 +378,9 @@ export default function MasterJobsPage() {
     {jobs.length === 0 ? (
       <p className="text-muted">No Jobs available</p>
     ) : (
-      <div className="grid">
+      <div className="grid internship-list">
 
-        {jobs.map((job) => {
+        {currentJobs.map((job) => {
 
           const canDelete =
             (
@@ -373,6 +397,13 @@ export default function MasterJobsPage() {
 
               <h3>{job.title}</h3>
 
+              {job.source === "external" && (
+
+        <p className="text-muted">
+           External Opportunity
+          </p>
+         )}
+
                <p className="text-muted">
                 <b>Company:</b> {job.company}
               </p>
@@ -382,27 +413,43 @@ export default function MasterJobsPage() {
                 <b>Location:</b> {job.location}
               </p>
 
-              <p className="text-muted">
-                <b>Salary:</b> {job.salary}
-              </p>
-
-              <p style={{ whiteSpace: "pre-line" }}>
-                <b>Description:</b> {job.description}
-              </p>
-
-              <p className="text-muted">
+             {job.source !== "external" && (
+  <p className="text-muted">
+    <b>Salary:</b> {job.salary}
+  </p>
+)}
+<p className="text-muted">
                 <b>Posted by:</b>{" "}
                 {job.created_by?.role && job.created_by?.name
                   ? `${job.created_by.role} (${job.created_by.name})`
                   : "External"}
               </p>
 
+              {job.source !== "external" && (
               <p className="text-muted">
-                <b>Applicants:</b>{" "}
-                {Array.isArray(job.applicants)
-                  ? job.applicants.length
-                  : 0}
-              </p>
+              Applicants: {job.applicants?.length || 0}
+             </p>
+             )}
+
+             <p className="description">
+  {showFull[job._id]
+    ? cleanDescription(job.description)
+    : cleanDescription(job.description).slice(0, 300) + "..."}
+</p> 
+
+<button
+  className="btn btn-outline"
+  onClick={() =>
+    setShowFull(prev => ({
+      ...prev,
+      [job._id]: !prev[job._id]
+    }))
+  }
+>
+  {showFull[job._id] ? "Show Less" : "Read More"}
+</button>
+
+              
 
               {canDelete && (
                 <button
@@ -420,6 +467,34 @@ export default function MasterJobsPage() {
       </div>
     )}
 
+
+{totalPages > 1 && (
+  <div className="pagination">
+
+    <button
+      disabled={currentPage === 1}
+      onClick={() =>
+        setCurrentPage(currentPage - 1)
+      }
+    >
+      Previous
+    </button>
+
+    <span className="page-info">
+      Page {currentPage} of {totalPages}
+    </span>
+
+    <button
+      disabled={currentPage === totalPages}
+      onClick={() =>
+        setCurrentPage(currentPage + 1)
+      }
+    >
+      Next
+    </button>
+
+  </div>
+)}
   </div>
 );
 }

@@ -1,135 +1,5 @@
 
-/*.dashboard {
-  padding: 30px;
-  background: #f5f7fb;
-  min-height: 100vh;
-}
 
-  /* HEADER 
-.dashboard-header h1 {
-  font-size: 28px;
-  margin-bottom: 5px;
-}
-
-.dashboard-header p {
-  color: #666;
-  margin-bottom: 20px;
-}
-
-/* GRID  
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-/* CARD 
-.card {
-  background: #fff;
-  padding: 20px;
-  border-radius: 14px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-  transition: all 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-3px);
-}
-
-/* STAT 
-.stat h2 {
-  font-size: 28px;
-  color: #4caf50;
-}
-
-.stat p {
-  color: #777;
-}
-
-/* ACTIONS 
-.actions h3 {
-  margin-bottom: 10px;
-}
-
-.action-buttons {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.action-buttons button {
-  background: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.action-buttons button:hover {
-  background: #43a047;
-}
-
-/* RECENT 
-.recent h3 {
-  margin-bottom: 10px;
-}
-
-.recent-item {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  color: #444;
-}
-
-.empty {
-  color: #888;
-}
-  
-
-  /* STAT COLORS 
-.stat {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-/* MEMBER 
-.stat.green {
-  border-left: 5px solid #4caf50;
-}
-
-/* MENTOR / MASTER 
-.stat.blue {
-  border-left: 5px solid #2196f3;
-}
-
-/* ICON COLOR 
-.stat svg {
-  color: #555;
-}
-
-/* ACTION TITLE 
-.actions h3 {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* BUTTON ICON ALIGN 
-.action-buttons button {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* RECENT TITLE 
-.recent h3 {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}*/
 .dashboard {
 
   min-height: 100vh;
@@ -283,24 +153,15 @@
 
 /* RECENT */
 
-.recent-item {
-
-  padding: 14px 0;
-
-  border-bottom: 1px solid var(--border);
-
-  color: var(--text);
-
-  font-size: 15px;
-
-  line-height: 1.6;
-}
 
 .empty {
 
   color: var(--text-light);
 
   font-size: 14px;
+}
+.recent {
+  margin-bottom: 20px;
 }
 .recent-item {
 
@@ -322,6 +183,7 @@
 
   color: var(--text);
 
+  font-size: 15px;
   text-decoration: none;
 
   transition: var(--transition);

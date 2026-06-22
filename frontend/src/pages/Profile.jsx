@@ -1,11 +1,14 @@
 
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Pencil, Trash2 } from "lucide-react";
+
 import "./Profile.css";
 
 function Profile() {
 
+const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
   const [editMode, setEditMode] = useState(false);
@@ -22,7 +25,11 @@ function Profile() {
   const [errors, setErrors] = useState({});
 
   const token = localStorage.getItem("token");
+  const storedUser = JSON.parse(
+  localStorage.getItem("user")
+);
 
+  const basePath = `/${storedUser?.role}`;
   // FETCH PROFILE
   const fetchProfile = async () => {
 
@@ -376,7 +383,12 @@ setPreview(
   return (
 
     <div className="profile-container">
-
+       <button
+  className="back-btn"
+  onClick={() => navigate(basePath)}
+>
+  ← Dashboard
+</button>
       <div className="profile-card">
 
         <h2>My Profile</h2>

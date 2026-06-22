@@ -1,12 +1,12 @@
 
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Trash2 } from "lucide-react";
 import "./QnA.css";
 
 function QnA() {
   const [questions, setQuestions] = useState([]);
-
+   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   //if (!user) return <p>Loading...</p>;
@@ -53,6 +53,12 @@ function QnA() {
 
   return (
     <div className="qna-container">
+     <button
+    className="back-btn"
+    onClick={() => navigate(basePath)}
+      >
+     ← Dashboard
+    </button>
       <div className="qna-header">
         <h2>Q&A Community</h2>
 

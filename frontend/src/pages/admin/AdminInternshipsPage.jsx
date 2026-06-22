@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-//import "/src/styles/internships.css";
+import "/src/styles/internships.css";
 export default function AdminInternshipsPage() {
   const [internships, setInternships] = useState([]);
-
+  const [showFull, setShowFull] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
   const token = localStorage.getItem("token");
 
   // Fetch all internships
@@ -18,6 +20,7 @@ export default function AdminInternshipsPage() {
 
   useEffect(() => {
     fetchInternships();
+    setCurrentPage(1);
   }, []);
 
   // Delete internship (admin only)
@@ -26,13 +29,31 @@ export default function AdminInternshipsPage() {
       await axios.delete(`${import.meta.env.VITE_API_URL}/internships/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
+      
       fetchInternships();
+      
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.message || "Delete failed");
     }
   };
+const totalPages = Math.ceil(
+  internships.length / itemsPerPage
+);
+
+const indexOfLastItem =
+  currentPage * itemsPerPage;
+
+const indexOfFirstItem =
+  indexOfLastItem - itemsPerPage;
+
+const currentInternships =
+  internships.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+  const cleanDescription = (description) =>
+  description?.replace(/\s+/g, " ").trim() || "";
 
        return (
   <div className="page-container">
@@ -42,11 +63,18 @@ export default function AdminInternshipsPage() {
       <p className="text-muted">No internships found</p>
     )}
 
-    <div className="grid">
-      {internships.map((intern) => (
+    <div className="grid internship-list">
+      {currentInternships.map((intern) => (
         <div key={intern._id} className="card">
 
           <h3>{intern.title}</h3>
+
+          {internships.source === "external" && (
+
+        <p className="text-muted">
+           External Opportunity
+          </p>
+         )}
 
            <p className="text-muted">
             <b>Company:</b> {intern.company}
@@ -56,25 +84,43 @@ export default function AdminInternshipsPage() {
             <b>Location:</b> {intern.location}
           </p>
 
-          <p className="text-muted">
-            <b>Stipend:</b> {intern.stipend || "Not specified"}
-          </p>
-
-          <p style={{ whiteSpace: "pre-line" }}>
-            <b>Description:</b> {intern.description}
-          </p>
-
-          <p className="text-muted">
+         {intern.source !== "external" && (
+  <p className="text-muted">
+    <b>Stipend:</b> {intern.stipend}
+  </p>
+)}
+ <p className="text-muted">
             <b>Posted by:</b>{" "}
             {intern.created_by
               ? `${intern.created_by.role} (${intern.created_by.name})`
               : "External"}
           </p>
 
-          <p className="text-muted">
-            <b>Applicants:</b> {intern.applicants?.length || 0}
-          </p>
+           {intern.source !== "external" && (
+           <p className="text-muted">
+            Applicants: {intern.applicants?.length || 0}
+            </p>
+            )}
+          <p className="description">
+  {showFull[intern._id]
+    ? cleanDescription(intern.description)
+    : cleanDescription(intern.description).slice(0, 300) + "..."}
+</p> 
 
+<button 
+  className="btn btn-outline"
+  onClick={() =>
+    setShowFull(prev => ({
+      ...prev,
+      [intern._id]: !prev[intern._id]
+    }))
+  }
+>
+  {showFull[intern._id] ? "Show Less" : "Read More"}
+</button>
+
+         
+         
           <button
             onClick={() => deleteInternship(intern._id)}
             className="btn btn-black"
@@ -84,6 +130,35 @@ export default function AdminInternshipsPage() {
         </div>
       ))}
     </div>
+
+    {totalPages > 1 && (
+  <div className="pagination">
+
+    <button
+      disabled={currentPage === 1}
+      onClick={() =>
+        setCurrentPage(currentPage - 1)
+      }
+    >
+      Previous
+    </button>
+
+    <span className="page-info">
+      Page {currentPage} of {totalPages}
+    </span>
+
+    <button
+      disabled={currentPage === totalPages}
+      onClick={() =>
+        setCurrentPage(currentPage + 1)
+      }
+    >
+      Next
+    </button>
+
+  </div>
+)}
+
   </div>
 );
 } 

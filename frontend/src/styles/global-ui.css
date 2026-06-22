@@ -38,7 +38,9 @@ body {
   border-radius: var(--radius);
   padding: 22px;
   transition: 0.3s ease;
+  
 }
+
 
 .card:hover {
   transform: translateY(-4px);
@@ -48,7 +50,7 @@ body {
 /* BUTTON SYSTEM */
 .btn {
   padding: 10px 14px;
-  border-radius: 10px;
+  border-radius: 20px;
   border: none;
   cursor: pointer;
   font-size: 14px;
@@ -80,13 +82,21 @@ body {
 }
 
 /* LIST GRID */
-.grid {
+/*.grid {
   display: grid;
   gap: 14px;
+}*/
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
 }
 .btn-black {
   background: #111827;
   color: white;
+ 
+  
+
 }
 
 .btn-black:hover {
@@ -523,6 +533,16 @@ body {
 
 .card p {
   white-space: pre-wrap;
+}
+.card-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.card-actions .btn {
+  width: auto;
 }
 
 @keyframes fadeIn {

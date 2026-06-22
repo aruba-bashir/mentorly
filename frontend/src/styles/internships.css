@@ -30,7 +30,35 @@
   flex-direction: column;
   gap: 15px;
 }
+.description {
+  min-height: 150px;
+}
+.card .btn-black {
+  margin-left: 10px;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 25px;
+}
 
+.page-info {
+  font-weight: 600;
+}
+
+.pagination button {
+  padding: 8px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 /* CARD → USE GLOBAL CARD 
 .internship-card {
 

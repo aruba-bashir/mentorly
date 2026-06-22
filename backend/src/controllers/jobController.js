@@ -241,15 +241,18 @@ export const deleteJob = async (req, res) => {
     }
 
     // CREATOR OR ADMIN
-    if (
-      job.created_by.toString() !==
-        req.user._id.toString() &&
-      req.user.role !== "admin"
-    ) {
-      return res.status(403).json({
-        message: "Not authorized",
-      });
-    }
+   if (
+  req.user.role !== "admin" &&
+  (
+    !job.created_by ||
+    job.created_by.toString() !==
+      req.user._id.toString()
+  )
+) {
+  return res.status(403).json({
+    message: "Not authorized",
+  });
+}
 
     await job.deleteOne();
 
@@ -258,6 +261,7 @@ export const deleteJob = async (req, res) => {
     });
 
   } catch (error) {
+    console.error("DELETE JOB ERROR:", error);
     res.status(500).json({
       error: error.message,
     });

@@ -3,6 +3,7 @@ import axios from "axios";
 import "/src/styles/internships.css";
 export default function AdminInternshipsPage() {
   const [internships, setInternships] = useState([]);
+   const [search, setSearch] = useState("");
   const [showFull, setShowFull] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
@@ -23,6 +24,16 @@ export default function AdminInternshipsPage() {
     setCurrentPage(1);
   }, []);
 
+  const filteredInternships = internships.filter(
+  (intern) =>
+    (intern.title || "")
+      .toLowerCase()
+      .includes(search.toLowerCase()) ||
+    (intern.company || "")
+      .toLowerCase()
+      .includes(search.toLowerCase())
+);
+
   // Delete internship (admin only)
   const deleteInternship = async (id) => {
     try {
@@ -38,7 +49,7 @@ export default function AdminInternshipsPage() {
     }
   };
 const totalPages = Math.ceil(
-  internships.length / itemsPerPage
+  filteredInternships.length / itemsPerPage
 );
 
 const indexOfLastItem =
@@ -48,7 +59,7 @@ const indexOfFirstItem =
   indexOfLastItem - itemsPerPage;
 
 const currentInternships =
-  internships.slice(
+  filteredInternships.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
@@ -58,6 +69,17 @@ const currentInternships =
        return (
   <div className="page-container">
     <h2 className="title">Admin Internships Panel</h2>
+
+    <input
+  type="text"
+  placeholder="Search by title or company..."
+  value={search}
+  onChange={(e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1);
+  }}
+  className="search-input"
+/>
 
     {internships.length === 0 && (
       <p className="text-muted">No internships found</p>

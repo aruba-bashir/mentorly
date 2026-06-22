@@ -3,6 +3,7 @@ import axios from "axios";
 import "/src/styles/internships.css";
 export default function AdminJobsPage() {
   const [jobs, setJobs] = useState([]);
+  const [search, setSearch] = useState("");
   const [showFull, setShowFull] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -24,6 +25,14 @@ export default function AdminJobsPage() {
     fetchJobs();
     setCurrentPage(1);
   }, []);
+  const filteredJobs = jobs.filter((job) =>
+  (job.title || "")
+    .toLowerCase()
+    .includes(search.toLowerCase()) ||
+  (job.company || "")
+    .toLowerCase()
+    .includes(search.toLowerCase())
+);
 
   // Delete job (admin only)
   const deleteJob = async (id) => {
@@ -40,7 +49,7 @@ export default function AdminJobsPage() {
   };
 
  const totalPages = Math.ceil(
-  jobs.length / itemsPerPage
+ filteredJobs.length / itemsPerPage
 );
 
 const indexOfLastItem =
@@ -50,7 +59,7 @@ const indexOfFirstItem =
   indexOfLastItem - itemsPerPage;
 
 const currentJobs =
-  jobs.slice(
+  filteredJobs.slice(
     indexOfFirstItem,
     indexOfLastItem
   ); 
@@ -62,6 +71,17 @@ const currentJobs =
   <div className="page-container">
 
     <h2 className="title">Admin Jobs Panel</h2>
+
+    <input
+  type="text"
+  placeholder="Search by title or company..."
+  value={search}
+  onChange={(e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1);
+  }}
+  className="search-input"
+/>
 
     {jobs.length === 0 && (
       <p className="text-muted">No jobs found</p>

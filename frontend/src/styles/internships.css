@@ -70,3 +70,15 @@
   color: red;
   font-size: 12px;
 }
+/*admin search filter */
+
+.search-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px;
+  margin: 20px auto;
+  display: block;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+}

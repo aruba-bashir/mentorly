@@ -276,15 +276,17 @@ export const deleteInternship = async (
 
     // CREATOR OR ADMIN
     if (
-      internship.created_by.toString() !==
-        req.user._id.toString() &&
-      req.user.role !== "admin"
-    ) {
-      return res.status(403).json({
-        message: "Not authorized",
-      });
-    }
-
+  req.user.role !== "admin" &&
+  (
+    !internship.created_by ||
+    internship.created_by.toString() !==
+      req.user._id.toString()
+  )
+) {
+  return res.status(403).json({
+    message: "Not authorized",
+  });
+}
     await internship.deleteOne();
 
     res.json({
@@ -293,6 +295,10 @@ export const deleteInternship = async (
     });
 
   } catch (error) {
+    console.error(
+    "DELETE INTERNSHIP ERROR:",
+    error
+  );
 
     res.status(500).json({
       error: error.message,

@@ -69,7 +69,7 @@ const AdminUsers = () => {
           users={filteredUsers}
           onDelete={handleDelete}
           onToggleBlock={handleToggleBlock}
-          onViewProfile={setSelectedUser}
+         
         />
 
        

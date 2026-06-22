@@ -13,7 +13,7 @@ function AdminUserProfile() {
   const fetchUser = async () => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/admin/users/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/admin/users/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+
 import {
   getUsers,
   deleteUser,
   toggleBlockUser,
+  approveUser,
 } from "../../services/userService";
 
 import UserStats from "../../components/admin/UserStats";
@@ -41,7 +43,10 @@ const AdminUsers = () => {
     await toggleBlockUser(id);
     loadUsers();
   };
-
+   const handleApprove = async (id) => {
+  await approveUser(id);
+  loadUsers();
+};
   if (loading) return <h2>Loading users...</h2>;
 
   
@@ -69,7 +74,7 @@ const AdminUsers = () => {
           users={filteredUsers}
           onDelete={handleDelete}
           onToggleBlock={handleToggleBlock}
-         
+          onApprove={handleApprove}
         />
 
        

@@ -18,6 +18,7 @@ export const deleteUser = async (id) => {
 
   if (!res.ok) {
     throw new Error("Failed to delete user");
+
   }
 
   return res.json();
@@ -30,6 +31,22 @@ export const toggleBlockUser = async (id) => {
 
   if (!res.ok) {
     throw new Error("Failed to update user");
+  }
+
+  return res.json();
+};
+export const approveUser = async (id) => {
+  const res = await fetch(
+    `${API}/${id}/approve`,
+    {
+      method: "PATCH",
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error(
+      "Failed to approve user"
+    );
   }
 
   return res.json();

@@ -191,7 +191,13 @@ export const login = async (req, res) => {
           "Please verify your email first",
       });
     }
-
+   // ADMIN APPROVAL
+    if (!user.isApproved) {
+    return res.status(400).json({
+     message:
+      "Your account is pending admin approval",
+    });
+    }
     // PASSWORD CHECK
     const isMatch =
       await bcrypt.compare(

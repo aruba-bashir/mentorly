@@ -4,7 +4,7 @@ import React from "react";
 
 import { useNavigate } from "react-router-dom";
 
-const UserTable = ({ users, onDelete, onToggleBlock }) => {
+const UserTable = ({ users, onDelete, onToggleBlock, onApprove }) => {
     const navigate = useNavigate();
   return (
     <div className="grid">
@@ -92,13 +92,24 @@ const UserTable = ({ users, onDelete, onToggleBlock }) => {
             </button>
 
             <button
-  className="btn btn-outline"
-  onClick={() =>
-    navigate(`/admin/user/${user._id}`)
-  }
->
-  View Profile
-</button>
+           className="btn btn-outline"
+            onClick={() =>
+             navigate(`/admin/user/${user._id}`)
+           }
+             >
+            View Profile
+             </button>
+
+             {!user.isApproved && (
+              <button
+            className="btn btn-outline"
+            onClick={() =>
+             onApprove(user._id)
+              }
+             >
+             Approve
+           </button>
+             )}
           </div>
 
         </div>

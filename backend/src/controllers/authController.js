@@ -198,6 +198,12 @@ export const login = async (req, res) => {
       "Your account is pending admin approval",
     });
     }
+   console.log("USER:", user.email);
+console.log("Verified:", user.isVerified);
+console.log("Approved:", user.isApproved);
+console.log("Password from request:", password);
+console.log("Stored hash:", user.password);
+
     // PASSWORD CHECK
     const isMatch =
       await bcrypt.compare(

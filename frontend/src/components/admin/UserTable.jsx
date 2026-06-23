@@ -51,6 +51,29 @@ const UserTable = ({ users, onDelete, onToggleBlock }) => {
             </span>
           </p>
 
+          {/*approval */}
+
+          <p>
+            <b>Approval:</b>{" "}
+           <span
+           style={{
+            padding: "3px 8px",
+            borderRadius: "8px",
+            background: user.isApproved
+             ? "#dcfce7"
+             : "#fef3c7",
+             color: user.isApproved
+             ? "#16a34a"
+              : "#d97706",
+             fontSize: "12px",
+              }}
+            >
+              {user.isApproved
+            ? "Approved"
+           : "Pending"}
+           </span>
+           </p>
+
           {/* ACTIONS */}
           <div style={{ marginTop: "12px", display: "flex", gap: "8px" }}>
 

@@ -109,7 +109,7 @@ if (existingUser) {
 }
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+   // const hashedPassword = await bcrypt.hash(password, 10);
 
     // Generate token
     const verifyToken = crypto.randomBytes(32).toString("hex");
@@ -118,7 +118,7 @@ if (existingUser) {
     const newUser = await User.create({
       name,
       email,
-      password: hashedPassword,
+      password,
       role,  
       verifyToken,
       verifyTokenExpiry: new Date(Date.now() + 3600000),
@@ -198,11 +198,7 @@ export const login = async (req, res) => {
       "Your account is pending admin approval",
     });
     }
-   console.log("USER:", user.email);
-console.log("Verified:", user.isVerified);
-console.log("Approved:", user.isApproved);
-console.log("Password from request:", password);
-console.log("Stored hash:", user.password);
+   
 
     // PASSWORD CHECK
     const isMatch =

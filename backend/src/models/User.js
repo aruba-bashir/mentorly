@@ -58,6 +58,10 @@ isVerified: {
   type: Boolean,
   default: false,
 },
+isApproved: {
+  type: Boolean,
+  default: false,
+},
 verifyToken: String,
 verifyTokenExpiry: Date,
   

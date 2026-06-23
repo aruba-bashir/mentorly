@@ -119,7 +119,7 @@ if (existingUser) {
       name,
       email,
       password: hashedPassword,
-      role,
+      role,  
       verifyToken,
       verifyTokenExpiry: new Date(Date.now() + 3600000),
     });

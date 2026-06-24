@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+
+import { toast } from "react-toastify";
+import ConfirmModal from "../../components/ConfirmModal";
+
 import "/src/styles/internships.css";
 export default function AdminJobsPage() {
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState("");
   const [showFull, setShowFull] = useState({});
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedJobId, setSelectedJobId] = useState(null);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -42,6 +50,7 @@ export default function AdminJobsPage() {
       });
 
       fetchJobs();
+      toast.success("Job deleted successfully");
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.message || "Delete failed");
@@ -149,12 +158,15 @@ const currentJobs =
           
          
           {/* ADMIN ACTION */}
-          <button
-            onClick={() => deleteJob(job._id)}
-            className="btn btn-black"
-          >
-            Delete Job
-          </button>
+         <button
+  onClick={() => {
+    setSelectedJobId(job._id);
+    setShowDeleteModal(true);
+  }}
+  className="btn btn-black"
+>
+  Delete Job
+</button>
 
         </div>
       ))}
@@ -187,6 +199,21 @@ const currentJobs =
 
   </div>
 )}
+<ConfirmModal
+  show={showDeleteModal}
+  title="Delete Job"
+  message="Are you sure you want to delete this job?"
+  confirmText="Delete"
+  onClose={() => {
+    setShowDeleteModal(false);
+    setSelectedJobId(null);
+  }}
+  onConfirm={async () => {
+    await deleteJob(selectedJobId);
+    setShowDeleteModal(false);
+    setSelectedJobId(null);
+  }}
+/>
   </div>
 );
 }

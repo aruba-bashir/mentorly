@@ -48,6 +48,10 @@ export default function About() {
         <button className="btn btn-outline" onClick={() => navigate("/")}>
           Back to Home
         </button>
+
+        
+
+
       </div>
 
     </div>

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Pencil, Trash2 } from "lucide-react";
-
+ import { toast } from "react-toastify";
 import "./Profile.css";
 
 function Profile() {
@@ -64,6 +64,7 @@ const navigate = useNavigate();
     } catch (err) {
 
       console.error(err);
+       toast.error("Failed to load profile");
     }
   };
 
@@ -287,10 +288,12 @@ setPreview(
 
     await fetchProfile();
     setPreview("");
+    toast.success("Profile picture removed");
 
   } catch (err) {
 
     console.error(err);
+     toast.error("Failed to remove profile picture");
   }
 };
   // UPDATE PROFILE
@@ -369,10 +372,12 @@ setPreview(
       setPreview("");
 
       setErrors({});
+      toast.success("Profile updated successfully");
 
     } catch (err) {
 
       console.error(err);
+       toast.error("Failed to update profile");
     }
   };
 

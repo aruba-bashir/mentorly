@@ -2,6 +2,8 @@
   import { useEffect, useState } from "react";
   import axios from "axios";
   import "/src/styles/internships.css";
+  import { toast } from "react-toastify";
+  import ConfirmModal from "../../components/ConfirmModal";
   export default function MentorJobsPage() {
 
   const [jobs, setJobs] = useState([]);
@@ -15,6 +17,8 @@
 
   const [errors, setErrors] = useState({});
  const [showFull, setShowFull] = useState({});
+ const [showDeleteModal, setShowDeleteModal] = useState(false);
+const [selectedJobId, setSelectedJobId] = useState(null);
  const [currentPage, setCurrentPage] = useState(1);
  const itemsPerPage = 5;
   const token = localStorage.getItem("token");
@@ -304,6 +308,7 @@
       setErrors({});
 
       fetchJobs();
+      toast.success("Job created successfully");
 
     } catch (err) {
 
@@ -311,16 +316,16 @@
         "Create Job Error:",
         err
       );
-
-      alert(
-        err.response?.data?.message ||
-        "Failed to create job"
-      );
+     toast.error(
+  err.response?.data?.message ||
+  "Failed to create job"
+);
+    
     }
   };
 
   // DELETE
-  const deleteJob = async (id) => {
+  /*const deleteJob = async (id) => {
 
     try {
 
@@ -343,7 +348,28 @@
       );
     }
   };
-    
+    */
+   const deleteJob = async (id) => {
+  try {
+    await axios.delete(
+      `${import.meta.env.VITE_API_URL}/jobs/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    toast.success("Job deleted successfully");
+    fetchJobs();
+
+  } catch (err) {
+    toast.error(
+      err.response?.data?.message ||
+      "Delete failed"
+    );
+  }
+};
 
   const cleanDescription = (description) =>
   description?.replace(/\s+/g, " ").trim() || "";
@@ -526,7 +552,10 @@ const currentJobs =
 
               {canDelete && (
                 <button
-                  onClick={() => deleteJob(job._id)}
+                 onClick={() => {
+  setSelectedJobId(job._id);
+  setShowDeleteModal(true);
+}}
                   className="btn btn-black"
                 >
                   Delete
@@ -567,7 +596,22 @@ const currentJobs =
 
   </div>
 )}
+<ConfirmModal
+  show={showDeleteModal}
+  title="Delete Job"
+  message="Are you sure you want to delete this job?"
+  confirmText="Delete"
+  onClose={() => {
+    setShowDeleteModal(false);
+    setSelectedJobId(null);
+  }}
+  onConfirm={async () => {
+    await deleteJob(selectedJobId);
 
+    setShowDeleteModal(false);
+    setSelectedJobId(null);
+  }}
+/>
   </div>
 );
 }

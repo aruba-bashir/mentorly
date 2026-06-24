@@ -1,10 +1,21 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import ConfirmModal from "../../components/ConfirmModal";
+
 import "/src/styles/internships.css";
 export default function AdminInternshipsPage() {
+
   const [internships, setInternships] = useState([]);
    const [search, setSearch] = useState("");
   const [showFull, setShowFull] = useState({});
+
+ const [showDeleteModal, setShowDeleteModal] = useState({
+  show: false,
+  id: null,
+});
+   
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const token = localStorage.getItem("token");
@@ -35,19 +46,29 @@ export default function AdminInternshipsPage() {
 );
 
   // Delete internship (admin only)
-  const deleteInternship = async (id) => {
+  /*const deleteInternship = async (id) => {
     try {
       await axios.delete(`${import.meta.env.VITE_API_URL}/internships/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       
       fetchInternships();
+     
       
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.message || "Delete failed");
     }
-  };
+  }; */
+
+  const deleteInternship = (id) => {
+  return axios.delete(
+    `${import.meta.env.VITE_API_URL}/internships/${id}`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+};
 const totalPages = Math.ceil(
   filteredInternships.length / itemsPerPage
 );
@@ -91,7 +112,7 @@ const currentInternships =
 
           <h3>{intern.title}</h3>
 
-          {internships.source === "external" && (
+          {intern.source === "external" && (
 
         <p className="text-muted">
            External Opportunity
@@ -144,11 +165,17 @@ const currentInternships =
          
          
           <button
-            onClick={() => deleteInternship(intern._id)}
+          onClick={() => {
+  setShowDeleteModal({
+    show: true,
+    id: intern._id,
+  });
+}}
             className="btn btn-black"
           >
             Delete Internship
           </button>
+          
         </div>
       ))}
     </div>
@@ -177,9 +204,28 @@ const currentInternships =
     >
       Next
     </button>
-
   </div>
 )}
+<ConfirmModal
+  show={showDeleteModal.show}
+  title="Delete Internship"
+  message="Are you sure you want to delete this internship?"
+  confirmText="Delete"
+  onClose={() =>
+    setShowDeleteModal({ show: false, id: null })
+  }
+  onConfirm={async () => {
+    try {
+      await deleteInternship(showDeleteModal.id);
+      toast.success("Internship deleted successfully");
+      fetchInternships();
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Delete failed");
+    } finally {
+      setShowDeleteModal({ show: false, id: null });
+    }
+  }}
+/>
 
   </div>
 );

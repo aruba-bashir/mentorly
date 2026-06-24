@@ -1,6 +1,9 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+
+import { toast } from "react-toastify";
+
 import "/src/styles/internships.css";
 
 export default function InternshipsPage() {
@@ -15,6 +18,9 @@ export default function InternshipsPage() {
   const [stipend, setStipend] = useState("");
   //other states ....
   const [showFull, setShowFull] = useState({});
+
+  const [applyingId, setApplyingId] = useState(null);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
@@ -35,6 +41,7 @@ export default function InternshipsPage() {
     })
     .then(res => setInternships(res.data))
     .catch(err => console.error(err));
+     
   };
   // fetch recomm internships
   const fetchRecommendedInternships = async () => {
@@ -62,7 +69,7 @@ export default function InternshipsPage() {
   }, [search, company ,location, stipend]);
 
   //  Apply internship
-  const applyInternship = async (id) => {
+ /* const applyInternship = async (id) => {
     try {
       await axios.post(
         `${import.meta.env.VITE_API_URL}/internships/${id}/apply`,
@@ -76,7 +83,27 @@ export default function InternshipsPage() {
     } catch (err) {
       alert(err.response?.data?.message || "Error");
     }
-  };
+  }; */
+   
+const applyInternship = async (id) => {
+  try {
+    setApplyingId(id);
+
+    await axios.post(
+      `${import.meta.env.VITE_API_URL}/internships/${id}/apply`,
+      {},
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    toast.success("Applied successfully");
+    fetchInternships();
+  } catch (err) {
+    toast.error(err.response?.data?.message || "Error applying");
+  } finally {
+    setApplyingId(null);
+  }
+};
+
  
   const cleanDescription = (description) =>
   description?.replace(/\s+/g, " ").trim() || "";
@@ -265,8 +292,9 @@ const currentInternships =
       onClick={() =>
         applyInternship(internship._id)
       }
+      disabled={applyingId === internship._id}
     >
-      Apply
+      {applyingId === internship._id ? "Applying..." : "Apply"}
     </button>
 
   )}

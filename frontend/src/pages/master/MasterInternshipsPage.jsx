@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+
+import { toast } from "react-toastify";
+import ConfirmModal from "../../components/ConfirmModal";
+
 import "/src/styles/internships.css";
 
 export default function MasterInternshipsPage() {
@@ -16,7 +20,8 @@ export default function MasterInternshipsPage() {
   const [description, setDescription] = useState("");
 
   const [errors, setErrors] = useState({});
-
+const [showDeleteModal, setShowDeleteModal] = useState(false);
+const [selectedInternshipId, setSelectedInternshipId] = useState(null);
   const [showFull, setShowFull] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -335,15 +340,12 @@ export default function MasterInternshipsPage() {
         err
       );
 
-      alert(
-        err.response?.data?.message ||
-        "Failed to create internship"
-      );
+      toast.error(err.response?.data?.message || "Failed to create internship");
     }
   };
 
   // DELETE
-  const deleteInternship = async (
+  /*const deleteInternship = async (
     id
   ) => {
 
@@ -367,7 +369,24 @@ export default function MasterInternshipsPage() {
         err
       );
     }
-  };
+  }; */
+const deleteInternship = async (id) => {
+  try {
+    await axios.delete(
+      `${import.meta.env.VITE_API_URL}/internships/${id}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    toast.success("Internship deleted successfully");
+    fetchInternships();
+  } catch (err) {
+    toast.error(err?.response?.data?.message || "Delete failed");
+  }
+};
+
+
   const recommendedIds = new Set(
   recommendedInternships.map(
     internship => internship._id
@@ -556,9 +575,10 @@ const canDelete =
               {canDelete && (
                 <button
                   className="btn btn-black"
-                  onClick={() =>
-                    deleteInternship(internship._id)
-                  }
+                  onClick={() => {
+  setSelectedInternshipId(internship._id);
+  setShowDeleteModal(true);
+}}
                 >
                   Delete
                 </button>
@@ -598,6 +618,22 @@ const canDelete =
 
   </div>
 )}
+<ConfirmModal
+  show={showDeleteModal}
+  title="Delete Internship"
+  message="Are you sure you want to delete this internship?"
+  confirmText="Delete"
+  onClose={() => {
+    setShowDeleteModal(false);
+    setSelectedInternshipId(null);
+  }}
+  onConfirm={async () => {
+    await deleteInternship(selectedInternshipId);
+    setShowDeleteModal(false);
+    setSelectedInternshipId(null);
+  }}
+/>
+
   </div>
 );
 }

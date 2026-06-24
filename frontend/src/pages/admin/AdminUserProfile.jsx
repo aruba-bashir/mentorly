@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import "../Profile.css";
 
 function AdminUserProfile() {
@@ -26,6 +27,7 @@ function AdminUserProfile() {
 
     } catch (err) {
       console.error(err);
+      toast.error("Failed to load user profile");
     }
   };
 

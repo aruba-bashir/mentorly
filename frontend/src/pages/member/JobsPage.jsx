@@ -1,6 +1,8 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+
 import "/src/styles/internships.css";
 export default function MemberJobsPage() {
 
@@ -13,6 +15,7 @@ export default function MemberJobsPage() {
   const [location, setLocation] = useState("");
   const [salary, setSalary] = useState("");
   const [showFull, setShowFull] = useState({});
+  const [applyingId, setApplyingId] = useState(null);
  const [currentPage, setCurrentPage] = useState(1);
  const [recommendedJobs, setRecommendedJobs] = useState([]);
 
@@ -64,7 +67,7 @@ export default function MemberJobsPage() {
   }, [search,company, location, salary]);
 
   //  Apply job
-  const applyJob = async (id) => {
+  /*const applyJob = async (id) => {
     try {
       await axios.post(
         `${import.meta.env.VITE_API_URL}/jobs/${id}/apply`,
@@ -80,7 +83,33 @@ export default function MemberJobsPage() {
     
     }
   };
- 
+ */
+const applyJob = async (id) => {
+  try {
+    setApplyingId(id);
+
+    await axios.post(
+      `${import.meta.env.VITE_API_URL}/jobs/${id}/apply`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    toast.success("Applied successfully");
+    fetchJobs();
+
+  } catch (err) {
+    toast.error(
+      err.response?.data?.message ||
+      "Error applying"
+    );
+  } finally {
+    setApplyingId(null);
+  }
+};
 
   const cleanDescription = (description) =>
   description?.replace(/\s+/g, " ").trim() || "";
@@ -254,14 +283,17 @@ const currentJobs =
 
   ) : (
 
-    <button
-      className="btn btn-primary"
-      onClick={() =>
-        applyJob(job._id)
-      }
-    >
-      Apply
-    </button>
+   <button
+  className="btn btn-primary"
+  onClick={() =>
+    applyJob(job._id)
+  }
+  disabled={applyingId === job._id}
+>
+  {applyingId === job._id
+    ? "Applying..."
+    : "Apply"}
+</button>
 
   )}
 

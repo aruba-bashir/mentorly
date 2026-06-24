@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import ConfirmModal from "../components/ConfirmModal";
 
 import { Trash2 } from "lucide-react";
 
@@ -15,7 +17,9 @@ function QuestionDetail() {
   const [answers, setAnswers] = useState([]);
 
   const [text, setText] = useState("");
-
+  const [submitting, setSubmitting] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+const [answerToDelete, setAnswerToDelete] = useState(null);
   const [errors, setErrors] =
     useState({});
 
@@ -69,6 +73,7 @@ function QuestionDetail() {
     } catch (err) {
 
       console.error(err);
+      toast.error("Failed to load answers");
     }
   };
 
@@ -164,7 +169,7 @@ function QuestionDetail() {
 
       return;
     }
-
+     setSubmitting(true);
     try {
 
       const res = await fetch(
@@ -192,10 +197,10 @@ function QuestionDetail() {
 
       if (!res.ok) {
 
-        alert(
-          data.message ||
-            "Failed to submit answer"
-        );
+       toast.error(
+  data.message ||
+  "Failed to submit answer"
+);
 
         return;
       }
@@ -205,13 +210,18 @@ function QuestionDetail() {
       setErrors({});
 
       fetchAnswers();
+      toast.success("Answer submitted successfully");
 
     } catch (err) {
 
       console.error(err);
 
-      alert("Something went wrong");
-    }
+      toast.error("Something went wrong");
+    }finally {
+
+  setSubmitting(false);
+
+}
   };
 
   // DELETE
@@ -220,7 +230,7 @@ function QuestionDetail() {
 
       try {
 
-        await fetch(
+       const res = await fetch(
           `${import.meta.env.VITE_API_URL}/api/qna/answers/${answerId}`,
           {
             method: "DELETE",
@@ -233,10 +243,12 @@ function QuestionDetail() {
         );
 
         fetchAnswers();
+        toast.success("Answer deleted successfully");
 
       } catch (err) {
 
         console.error(err);
+        toast.error("Failed to delete answer");
       }
     };
 
@@ -292,11 +304,10 @@ function QuestionDetail() {
 
             <button
               className="delete-btn"
-              onClick={() =>
-                handleDeleteAnswer(
-                  a._id
-                )
-              }
+              onClick={() => {
+  setAnswerToDelete(a._id);
+  setShowDeleteModal(true);
+}}
             >
               <Trash2 size={18} />
             </button>
@@ -332,12 +343,35 @@ function QuestionDetail() {
             {text.trim().length}/1000
           </p>
 
-          <button onClick={handleAnswer}  className="qna-submit-btn">
-            Submit Answer
-          </button>
+         <button
+  onClick={handleAnswer}
+  className="qna-submit-btn"
+  disabled={submitting}
+>
+  {submitting
+    ? "Submitting..."
+    : "Submit Answer"}
+</button>
         </>
       )}
     </div>
+    <ConfirmModal
+  show={showDeleteModal}
+  title="Delete Answer"
+  message="Are you sure you want to delete this answer? This action cannot be undone."
+  confirmText="Delete"
+  cancelText="Cancel"
+  onConfirm={() => {
+    handleDeleteAnswer(answerToDelete);
+
+    setShowDeleteModal(false);
+    setAnswerToDelete(null);
+  }}
+  onClose={() => {
+    setShowDeleteModal(false);
+    setAnswerToDelete(null);
+  }}
+/>
     </div>
   );
 }

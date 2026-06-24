@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
+
 import { User, HelpCircle, MessageSquare, Activity } from "lucide-react";
 import { useAuth } from "../context/AuthContext"; 
 
@@ -92,6 +93,7 @@ function Dashboard() {
       }
     } catch (err) {
       console.error(err);
+      
     }
   };
 
@@ -124,6 +126,7 @@ function Dashboard() {
 
   } catch (err) {
     console.error(err);
+     
   }
 };
 

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import ConfirmModal from "./ConfirmModal";
 
 function UpdateCard({ update, fetchUpdates }) {
   const user = JSON.parse(localStorage.getItem("user")) || {};
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const handleDelete = async () => {
   try {
     const token = localStorage.getItem("token");
@@ -17,8 +20,10 @@ function UpdateCard({ update, fetchUpdates }) {
     );
 
     fetchUpdates();
+    toast.success("Update deleted successfully");
   } catch (err) {
     console.error("Delete failed:", err.response?.data || err.message);
+    toast.error("Failed to delete update");
   }
 };
   return (
@@ -29,10 +34,25 @@ function UpdateCard({ update, fetchUpdates }) {
      
      
    {(user?.role === "admin" || update.author?._id === user?._id) && (
-  <button  className="btn btn-black" onClick={() => handleDelete(update._id)}>
-    Delete
-  </button>
+   <button
+  className="btn btn-black"
+  onClick={() => setShowDeleteModal(true)}
+>
+  Delete
+</button>
 )}
+<ConfirmModal
+  show={showDeleteModal}
+  title="Delete Update"
+  message="Are you sure you want to delete this update?"
+  confirmText="Delete"
+  cancelText="Cancel"
+  onConfirm={() => {
+    handleDelete(update._id);
+    setShowDeleteModal(false);
+  }}
+  onClose={() => setShowDeleteModal(false)}
+/>
     </div>
   );
 }

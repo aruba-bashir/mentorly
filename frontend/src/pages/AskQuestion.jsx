@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Navigate , useNavigate,} from "react-router-dom";
+import { toast } from "react-toastify";
 
 function AskQuestion() {
 
@@ -9,7 +10,9 @@ function AskQuestion() {
   const [description, setDescription] = useState("");
 
   const [errors, setErrors] = useState({});
+
   const navigate = useNavigate();
+  const [posting, setPosting] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -168,7 +171,7 @@ function AskQuestion() {
 
       return;
     }
-
+     setPosting(true);
     try {
 
       const res = await fetch(
@@ -194,25 +197,33 @@ function AskQuestion() {
 
       const data = await res.json();
 
-      if (!res.ok) {
+     if (!res.ok) {
 
-        alert(
-          data.message ||
-            "Failed to post question"
-        );
+  toast.error(
+    data.message ||
+    "Failed to post question"
+  );
 
-        return;
-      }
+  return;
+}
+     toast.success("Question posted successfully");
 
-      window.location.href =
-        `${basePath}/qna`;
+setTimeout(() => {
+  window.location.href =
+    `${basePath}/qna`;
+}, 1000);
 
     } catch (err) {
 
-      console.error(err);
+  console.error(err);
 
-      alert("Something went wrong");
-    }
+  toast.error("Something went wrong");
+}
+finally {
+
+    setPosting(false);
+
+  }
   };
 
   return (
@@ -268,9 +279,13 @@ function AskQuestion() {
   {description.trim().length}/1000
 </p>
 
-      <button onClick={handleSubmit}  className="qna-submit-btn">
-        Post Question
-      </button>
+     <button
+  onClick={handleSubmit}
+  className="qna-submit-btn"
+  disabled={posting}
+>
+  {posting ? "Posting..." : "Post Question"}
+</button>
 
       </div>
     </div>

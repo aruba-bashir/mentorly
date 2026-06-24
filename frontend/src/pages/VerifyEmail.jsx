@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+
 function VerifyEmail() {
   const { token } = useParams();
   
@@ -24,8 +25,10 @@ function VerifyEmail() {
 
         if (!res.ok) {
           setMessage(data.message || "Verification failed");
+         
         } else {
           setMessage("Email verified successfully! Redirecting to login...");
+         
           //rediredt after 2 secs
           setTimeout(()=>{
             navigate("/login");
@@ -33,6 +36,7 @@ function VerifyEmail() {
         }
       } catch (err) {
         setMessage("Server error");
+       
       }
     };
 

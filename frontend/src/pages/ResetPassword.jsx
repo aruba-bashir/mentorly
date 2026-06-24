@@ -77,14 +77,17 @@ const handleChange = (e) => {
 
       if (!res.ok) {
         setError(data.message);
+       
         return;
       }
 
       setMessage("Password reset successful!");
+    
       setTimeout(() => navigate("/login"), 2000);
 
     } catch {
       setError("Server error");
+     
     }
   };
 

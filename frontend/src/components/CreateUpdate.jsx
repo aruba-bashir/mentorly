@@ -1,7 +1,7 @@
 
-
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function CreateUpdate({ fetchUpdates }) {
 
@@ -146,6 +146,7 @@ function CreateUpdate({ fetchUpdates }) {
       setErrors({});
 
       fetchUpdates();
+      toast.success("Update posted successfully");
 
     } catch (err) {
 
@@ -155,10 +156,10 @@ function CreateUpdate({ fetchUpdates }) {
           err.message
       );
 
-      alert(
-        err.response?.data?.message ||
-          "Failed to create post"
-      );
+     toast.error(
+  err.response?.data?.message ||
+  "Failed to create post"
+);
     }
   };
 

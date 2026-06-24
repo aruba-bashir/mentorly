@@ -2,11 +2,15 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Trash2 } from "lucide-react";
+import { toast } from "react-toastify";
+import ConfirmModal from "../components/ConfirmModal";
 import "./QnA.css";
 
 function QnA() {
   const [questions, setQuestions] = useState([]);
    const navigate = useNavigate();
+   const [showDeleteModal, setShowDeleteModal] = useState(false);
+const [questionToDelete, setQuestionToDelete] = useState(null);
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   //if (!user) return <p>Loading...</p>;
@@ -27,6 +31,7 @@ function QnA() {
       setQuestions(data);
     } catch (err) {
       console.error(err);
+      toast.error("Failed to load questions");
     }
   };
 
@@ -38,7 +43,7 @@ function QnA() {
     e.preventDefault();
 
     try {
-      await fetch(`${import.meta.env.VITE_API_URL}/api/qna/questions/${id}`, {
+   const res =   await fetch(`${import.meta.env.VITE_API_URL}/api/qna/questions/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -46,10 +51,13 @@ function QnA() {
       });
 
       fetchQuestions();
+      toast.success("Question deleted successfully");
     } catch (err) {
       console.error(err);
-    }
-  };
+      toast.error("Failed to delete question");
+}
+    };
+  
 
   return (
     <div className="qna-container">
@@ -105,7 +113,11 @@ function QnA() {
               user.role === "admin") && (
               <button
                 className="delete-btn"
-                onClick={(e) => handleDelete(q._id, e)}
+                onClick={(e) => {
+  e.preventDefault();
+  setQuestionToDelete(q._id);
+  setShowDeleteModal(true);
+}}
               >
                 <Trash2 size={18} />
               </button>
@@ -113,8 +125,28 @@ function QnA() {
           </Link>
         ))}
       </div>
+      <ConfirmModal
+  show={showDeleteModal}
+  title="Delete Question"
+  message="Are you sure you want to delete this question? This action cannot be undone."
+  confirmText="Delete"
+  cancelText="Cancel"
+  onConfirm={() => {
+    handleDelete(questionToDelete, {
+      preventDefault: () => {},
+    });
+
+    setShowDeleteModal(false);
+    setQuestionToDelete(null);
+  }}
+  onClose={() => {
+    setShowDeleteModal(false);
+    setQuestionToDelete(null);
+  }}
+/>
     </div>
   );
 }
+
 
 export default QnA;

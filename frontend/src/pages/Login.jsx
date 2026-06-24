@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext"; //  IMPORTANT
+import { toast } from "react-toastify";
 import { FiEye, FiEyeOff, FiArrowLeft } from "react-icons/fi";
 
 
@@ -18,37 +19,7 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Handle input
-  /*const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  }; */
-  /*const handleChange = (e) => {
 
-  let { name, value } = e.target;
-
-  // EMAIL
-  if (name === "email") {
-    value = value.replace(/\s/g, "").toLowerCase();
-  }
-
-  // PASSWORD
-  if (name === "password") {
-    value = value.trimStart();
-  }
-
-  setFormData({
-    ...formData,
-    [name]: value,
-  });
-
-  // CLEAR FIELD ERROR
-  setErrors((prev) => ({
-    ...prev,
-    [name]: "",
-    api: "",
-  }));
-};
- */
 // Handle input
 const handleChange = (e) => {
 
@@ -83,15 +54,7 @@ const handleChange = (e) => {
     api: "",
   });
 };
-  // Validation
-  /*const validate = () => {
-    let newErrors = {};
-
-    if (!formData.email) newErrors.email = "Email is required";
-    if (!formData.password) newErrors.password = "Password is required";
-
-    return newErrors;
-  }; */
+  
   // Validation
 const validate = () => {
 
@@ -161,19 +124,19 @@ const validate = () => {
 
       const data = await response.json();
 
-      if (!response.ok) {
-        setErrors({ api: data.message });
-        return;
-      }
+     if (!response.ok) {
+  toast.error(data.message || "Login failed");
+  return;
+}
 
       // FIX: use context login (NOT localStorage directly)
       login(data);
-
+      toast.success("Login successful");
       //  redirect based on role
       navigate(`/${data.user.role}`);
 
     } catch (err) {
-      setErrors({ api: "Server error. Try again." });
+       toast.error("Server error. Try again.");
     } finally {
       setLoading(false);
     }
@@ -240,7 +203,7 @@ const validate = () => {
           Forgot password?
         </p>
 
-        {errors.api && <p className="text-error">{errors.api}</p>}
+        {/*{errors.api && <p className="text-error">{errors.api}</p>}*/}
 
         <button
           className="btn btn-black auth-btn"

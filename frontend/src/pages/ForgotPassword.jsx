@@ -50,42 +50,19 @@ if (!emailRegex.test(cleanEmail)) {
 
       if (!res.ok) {
       setError(data.message || "Error occurred");
+     
       return;
     }
       setMessage(" Reset link sent to your email");
+    
       
     } catch (err){
       setError("Server error");
+     
     }
   };
 
-/*return (
-    <div className="auth-container">
-      <div className="auth-box">
 
-        <button className="back-btn" onClick={() => navigate(-1)}>
-          <FiArrowLeft size={16} /> Back
-        </button>
-
-        <h2>Forgot Password</h2>
-        <p>Enter your email to receive reset link</p>
-
-        <input
-          type="email"
-          placeholder="Email address"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        {error && <p className="error">{error}</p>}
-        {message && <p style={{ fontSize: "12px" }}>{message}</p>}
-
-        <button className="auth-btn" onClick={handleSubmit}>
-          Send Reset Link
-        </button>
-      </div>
-    </div>
-  ); */
 return (
   <div className="page-container">
     <div
@@ -132,7 +109,7 @@ return (
         }}
       />
 
-      {error && (
+     {error && (
         <p className="text-error">
           {error}
         </p>

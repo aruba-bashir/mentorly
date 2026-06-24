@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff, FiArrowLeft } from "react-icons/fi";
+import { toast } from "react-toastify";
 import "/src/styles/global-ui.css";
 function Signup() {
   const navigate = useNavigate();
@@ -125,10 +126,10 @@ if (!email) {
 
       const data = await response.json();
 
-      if (!response.ok) {
-        setErrors({ api: data.message });
-        return;
-      }
+       if (!response.ok) {
+  toast.error(data.message || "Signup failed");
+  return;
+}
 
       //localStorage.setItem("token", data.token);
       //localStorage.setItem("user", JSON.stringify(data.user));
@@ -136,12 +137,15 @@ if (!email) {
       //navigate("/dashboard");
       //alert("Signup successful. Please verify your email.");
       //navigate("/login");
-      setSuccess("Signup successful! Please check your email to verify.");
+     // setSuccess("Signup successful! Please check your email to verify.");
+     toast.success(
+  "Signup successful! Please check your email to verify."
+);
       setTimeout(() => {
        navigate("/login");
    }, 2000);
     } catch (err) {
-      setErrors({ api: "Server error. Try again." });
+      toast.error("Server error. Try again.");
     } finally {
       setLoading(false);
     }
@@ -335,14 +339,14 @@ if (!email) {
       )}
 
       {/* API ERROR */}
-      {errors.api && (
+     {/* {errors.api && (
         <p className="text-error">
           {errors.api}
         </p>
-      )}
+      )} */}
 
       {/* SUCCESS */}
-      {success && (
+     { /*{success && (
         <p
           style={{
             color: "green",
@@ -351,7 +355,7 @@ if (!email) {
         >
           {success}
         </p>
-      )}
+      )} */}
 
       {/* BUTTON */}
       <button

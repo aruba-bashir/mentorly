@@ -4,6 +4,8 @@
 
  import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import ConfirmModal from "../components/ConfirmModal";
+import { toast } from "react-toastify";
 
 const Webinars = () => {
 
@@ -15,11 +17,15 @@ const Webinars = () => {
   const [showModal, setShowModal] = useState(false);
   const [editingWebinar, setEditingWebinar] = useState(null);
 
+
   // FORM STATES
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [zoomLink, setZoomLink] = useState("");
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+const [webinarToDelete, setWebinarToDelete] = useState(null);
 
   const [errors, setErrors] = useState({});
 
@@ -362,17 +368,22 @@ const Webinars = () => {
         const data =
           await res.json();
 
-        if (!res.ok) {
+       if (!res.ok) {
 
-          alert(
-            data.message ||
-              "Failed to save webinar"
-          );
+  toast.error(
+    data.message ||
+    "Failed to save webinar"
+  );
 
-          return;
-        }
+  return;
+}
 
         fetchWebinars();
+        toast.success(
+  editingWebinar
+    ? "Webinar updated successfully"
+    : "Webinar created successfully"
+);
 
         // RESET
         setShowModal(false);
@@ -389,10 +400,8 @@ const Webinars = () => {
       } catch (err) {
 
         console.error(err);
-
-        alert(
-          "Something went wrong"
-        );
+         toast.error("Something went wrong");
+       
       }
     };
 
@@ -424,10 +433,11 @@ const Webinars = () => {
         }
 
         fetchWebinars();
-
+        toast.success("Webinar deleted successfully");
       } catch (err) {
 
         console.error(err);
+        toast.error("Failed to delete webinar");
       }
     };
 
@@ -725,16 +735,15 @@ const Webinars = () => {
                     Edit
                   </button>
 
-                  <button
-                    className="btn btn-black"
-                    onClick={() =>
-                      handleDelete(
-                        webinar._id
-                      )
-                    }
-                  >
-                    Delete
-                  </button>
+                 <button
+  className="btn btn-black"
+  onClick={() => {
+    setWebinarToDelete(webinar._id);
+    setShowDeleteModal(true);
+  }}
+>
+  Delete
+</button>
 
                 </div>
               )}
@@ -745,6 +754,22 @@ const Webinars = () => {
     }
     </div>
 )}
+<ConfirmModal
+  show={showDeleteModal}
+  title="Delete Webinar"
+  message="Are you sure you want to delete this webinar?"
+  confirmText="Delete"
+  cancelText="Cancel"
+  onConfirm={() => {
+    handleDelete(webinarToDelete);
+    setShowDeleteModal(false);
+    setWebinarToDelete(null);
+  }}
+  onClose={() => {
+    setShowDeleteModal(false);
+    setWebinarToDelete(null);
+  }}
+/>
 </div>
   );
 }

@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import UpdateCard from "../components/UpdateCard";
 import CreateUpdate from "../components/CreateUpdate";
 
@@ -27,6 +28,7 @@ function TechUpdates() {
       setUpdates(res.data);
     } catch (err) {
       console.error("Fetch error:", err.response?.data || err.message);
+        toast.error("Failed to load updates");
     }
   };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import "./ConfirmModal.css";
-import "./ConfirmModal.css";
+
 
 export default function ConfirmModal({
   show,

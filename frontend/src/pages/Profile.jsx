@@ -341,7 +341,7 @@ setPreview(
       if (file) {
 
         formDataToSend.append(
-          "profilePic",
+          "image",
           file
         );
       }
@@ -404,7 +404,7 @@ setPreview(
   preview
     ? preview
     : user.profilePic
-    ? `${import.meta.env.VITE_API_URL}/${user.profilePic}`
+    ? user.profilePic
     : `https://ui-avatars.com/api/?name=${user.name}`
 }
           

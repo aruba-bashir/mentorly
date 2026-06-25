@@ -42,7 +42,7 @@ mongoose
   .then(() => console.log("MongoDB connected"));
    await cleanupUnverifiedUsers();
 
-app.use("/uploads", express.static("uploads"));
+//app.use("/uploads", express.static("uploads"));
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/auth", verifyRoute);

@@ -34,7 +34,7 @@ import upload from "../middleware/upload.js";
 const router = express.Router();
 
 router.put(
-  "/profile-pic",
+  "/update",
   protect,
   upload.single("image"),
   updateProfile

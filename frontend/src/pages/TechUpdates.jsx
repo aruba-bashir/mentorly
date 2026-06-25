@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import UpdateCard from "../components/UpdateCard";
 import CreateUpdate from "../components/CreateUpdate";
+import "./techupdate.css";
 
 function TechUpdates() {
   const [updates, setUpdates] = useState([]);
@@ -41,7 +42,7 @@ function TechUpdates() {
    <h2 className="title">Tech Updates</h2>
 
       {(user?.role === "mentor" || user?.role === "master") && (
-        <div className="card" style={{ marginBottom: "16px" }}>
+        <div className="card tech-card" style={{ marginBottom: "16px" }}>
         <CreateUpdate fetchUpdates={fetchUpdates} />
         </div>
       )}
@@ -49,7 +50,7 @@ function TechUpdates() {
       {updates?.length === 0 ? (
         <p className="text-muted">No updates yet...</p>
       ) : (
-                <div className="grid">
+                <div className="tech-grid">
 
        { updates.map((u) => (
           <UpdateCard

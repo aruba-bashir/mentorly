@@ -27,19 +27,22 @@ function UpdateCard({ update, fetchUpdates }) {
   }
 };
   return (
-    <div className="card" >
+    <div className="card tech-card" >
+      <div className="tech-content">
       <h4>{update.author?.name  ? update.author?.name :  "Anonymous"}</h4>
-      <p className="text-muted">{update.content}</p>
+      <p className="text-muted tech-text">{update.content}</p>
 
-     
+     </div>
      
    {(user?.role === "admin" || update.author?._id === user?._id) && (
+    <div className="tech-actions">
    <button
   className="btn btn-black"
   onClick={() => setShowDeleteModal(true)}
 >
   Delete
 </button>
+</div>
 )}
 <ConfirmModal
   show={showDeleteModal}

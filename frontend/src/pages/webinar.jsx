@@ -1,8 +1,9 @@
 
- import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import ConfirmModal from "../components/ConfirmModal";
 import { toast } from "react-toastify";
+import "./webinar.css";
 
 const Webinars = () => {
 
@@ -603,7 +604,7 @@ const [webinarToDelete, setWebinarToDelete] = useState(null);
         <p className="text-muted">No webinars yet</p>
 
       ) : (
-      <div className="grid">
+      <div className="webinar-grid">
         {webinars.map((webinar) => {
 
           const isPast =
@@ -615,7 +616,7 @@ const [webinarToDelete, setWebinarToDelete] = useState(null);
 
             <div
               key={webinar?._id}
-              className="card"
+              className="card webinar-card"
             >
 
               <h3>
@@ -624,7 +625,7 @@ const [webinarToDelete, setWebinarToDelete] = useState(null);
               </h3>
 
               <p
-                className="text-muted"
+                className="text-muted webinar-description"
               >
                 {
                   webinar?.description
@@ -692,7 +693,7 @@ const [webinarToDelete, setWebinarToDelete] = useState(null);
                   user?._id) && (
 
                 <div className="form-row">
-
+                 <div className="webinar-actions">
                   <button
                     className="btn btn-outline"
                     onClick={() => {
@@ -741,7 +742,7 @@ const [webinarToDelete, setWebinarToDelete] = useState(null);
 >
   Delete
 </button>
-
+</div>
                 </div>
               )}
             </div>

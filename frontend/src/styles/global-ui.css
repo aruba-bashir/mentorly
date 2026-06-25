@@ -39,6 +39,7 @@ body {
   padding: 22px;
   transition: 0.3s ease;
   
+
 }
 
 
@@ -90,6 +91,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 20px;
+ 
 }
 .btn-black {
   background: #111827;
@@ -533,6 +535,7 @@ body {
 
 .card p {
   white-space: pre-wrap;
+ 
 }
 .card-actions {
   display: flex;

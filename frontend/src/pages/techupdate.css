@@ -1,0 +1,44 @@
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(320px, 1fr)
+  );
+  gap: 20px;
+}
+
+.tech-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 260px;
+}
+
+.tech-content {
+  flex: 1;
+}
+
+.tech-text {
+  white-space: pre-line;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+}
+
+.tech-actions {
+  margin-top: 16px;
+}
+
+.tech-actions .btn {
+  width: auto;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .tech-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tech-card {
+    min-height: auto;
+  }
+}

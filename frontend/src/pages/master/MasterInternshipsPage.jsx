@@ -1,5 +1,4 @@
 
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -11,6 +10,7 @@ import "/src/styles/internships.css";
 export default function MasterInternshipsPage() {
 
   const [internships, setInternships] = useState([]);
+  const [search, setSearch] = useState("");
   const [recommendedInternships, setRecommendedInternships] = useState([]);
 
   const [title, setTitle] = useState("");
@@ -20,6 +20,7 @@ export default function MasterInternshipsPage() {
   const [description, setDescription] = useState("");
 
   const [errors, setErrors] = useState({});
+  
 const [showDeleteModal, setShowDeleteModal] = useState(false);
 const [selectedInternshipId, setSelectedInternshipId] = useState(null);
   const [showFull, setShowFull] = useState({});
@@ -332,6 +333,7 @@ const [selectedInternshipId, setSelectedInternshipId] = useState(null);
       setErrors({});
 
       fetchInternships();
+      toast.success("Internship created successfully");
 
     } catch (err) {
 
@@ -372,20 +374,37 @@ const [selectedInternshipId, setSelectedInternshipId] = useState(null);
   }; */
 const deleteInternship = async (id) => {
   try {
+
     await axios.delete(
       `${import.meta.env.VITE_API_URL}/internships/${id}`,
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
 
     toast.success("Internship deleted successfully");
+
     fetchInternships();
+
   } catch (err) {
-    toast.error(err?.response?.data?.message || "Delete failed");
+
+    console.error(
+      "Delete Internship Error:",
+      err
+    );
+
+    toast.error(
+      err.response?.data?.message ||
+      "Delete failed"
+    );
   }
 };
 
+
+const cleanDescription = (description) =>
+description?.replace(/\s+/g, " ").trim() || "";
 
   const recommendedIds = new Set(
   recommendedInternships.map(
@@ -402,9 +421,16 @@ const orderedInternships = [
       )
   ),
 ];
+const filteredInternships = orderedInternships.filter(internship => {
+  const q = search.toLowerCase();
 
+  return (
+    internship.title.toLowerCase().includes(q) ||
+    internship.company.toLowerCase().includes(q)
+  );
+});
   const totalPages = Math.ceil(
-  orderedInternships.length / itemsPerPage
+  filteredInternships.length / itemsPerPage
 );
 
 const indexOfLastItem =
@@ -414,18 +440,27 @@ const indexOfFirstItem =
   indexOfLastItem - itemsPerPage;
 
 const currentInternships =
-  orderedInternships.slice(
+  filteredInternships.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
   
-  const cleanDescription = (description) =>
-  description?.replace(/\s+/g, " ").trim() || "";
-  
+
   return (
   <div className="page-container">
 
     <h2 className="title">All Internships</h2>
+     <input
+  type="text"
+  placeholder="Search by title or company..."
+  value={search}
+  onChange={(e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1); // VERY IMPORTANT for pagination
+  }}
+  className="form-input"
+  style={{ marginBottom: "15px" }}
+/>
 
     {/* FORM */}
     <form className="card internship-form" onSubmit={handleSubmit}>

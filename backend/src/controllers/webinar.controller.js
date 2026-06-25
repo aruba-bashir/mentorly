@@ -340,7 +340,9 @@ export const updateWebinar =
             "Webinar not found",
         });
       }
-
+      console.log("Role:", req.user.role);
+     console.log("User:", req.user.id);
+     console.log("Owner:", webinar.createdBy.toString());
       // AUTH CHECK
       if (
         webinar.createdBy.toString() !==

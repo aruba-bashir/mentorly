@@ -10,7 +10,7 @@ import "/src/styles/internships.css";
 export default function MasterJobsPage() {
 
   const [jobs, setJobs] = useState([]);
-
+ const [search, setSearch] = useState("");
   const [recommendedJobs, setRecommendedJobs] = useState([]);
   const [title, setTitle] = useState("");
   const [company, setCompany] = useState("");
@@ -275,6 +275,7 @@ const [selectedJobId, setSelectedJobId] = useState(null);
       setErrors({});
 
       fetchJobs();
+       toast.success("Job created successfully");
 
     } catch (err) {
 
@@ -308,6 +309,7 @@ const [selectedJobId, setSelectedJobId] = useState(null);
       console.error("Delete Error:", err);
     }
   }; */
+
   const deleteJob = async (id) => {
   try {
     await axios.delete(
@@ -322,9 +324,17 @@ const [selectedJobId, setSelectedJobId] = useState(null);
     toast.success("Job deleted successfully");
     fetchJobs();
   } catch (err) {
+     console.error(
+      "Delete Job Error:",
+      err
+    );
     toast.error(err?.response?.data?.message || "Delete failed");
   }
 };
+
+const cleanDescription = (description) =>
+  description?.replace(/\s+/g, " ").trim() || "";
+
 
   const recommendedIds = new Set(
   recommendedJobs.map(job => job._id)
@@ -339,8 +349,17 @@ const orderedJobs = [
       )
   ),
 ];
-   const totalPages = Math.ceil(
-  orderedJobs.length / itemsPerPage
+const filteredJobs = orderedJobs.filter((job) => {
+  const searchText = search.toLowerCase();
+
+  return (
+    job.title?.toLowerCase().includes(searchText) ||
+    job.company?.toLowerCase().includes(searchText)
+  );
+});
+
+  const totalPages = Math.ceil(
+  filteredJobs.length / itemsPerPage
 );
 
 const indexOfLastItem =
@@ -350,19 +369,29 @@ const indexOfFirstItem =
   indexOfLastItem - itemsPerPage;
 
 const currentJobs =
-  orderedJobs.slice(
+  filteredJobs.slice(
     indexOfFirstItem,
     indexOfLastItem
   );  
 
-  const cleanDescription = (description) =>
-  description?.replace(/\s+/g, " ").trim() || "";
+  
 
 
   return (
   <div className="page-container">
 
     <h2 className="title">All Jobs</h2>
+     <input
+  type="text"
+  placeholder="Search by title or company..."
+  value={search}
+  onChange={(e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1); // VERY IMPORTANT for pagination
+  }}
+  className="form-input"
+  style={{ marginBottom: "15px" }}
+/>
 
     {/* FORM */}
     <form onSubmit={handleSubmit} className="card" style={{ marginBottom: "20px" }}>

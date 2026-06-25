@@ -8,7 +8,9 @@ import "/src/styles/internships.css";
 export default function MentorInternshipsPage() {
 
   const [internships, setInternships] = useState([]);
+  const [search, setSearch] = useState("");
   const [recommendedInternships, setRecommendedInternships] = useState([]);
+
 
   const [title, setTitle] = useState("");
   const [company, setCompany] = useState("");
@@ -408,6 +410,12 @@ export default function MentorInternshipsPage() {
   const cleanDescription = (description) =>
   description?.replace(/\s+/g, " ").trim() || "";
 
+const recommendedIds = new Set(
+  recommendedInternships.map(
+    internship => internship._id
+  )
+);
+
   const orderedInternships = [
   ...recommendedInternships,
 
@@ -418,14 +426,17 @@ export default function MentorInternshipsPage() {
       )
   ),
 ];
-const recommendedIds = new Set(
-  recommendedInternships.map(
-    internship => internship._id
-  )
-);
+const filteredInternships = orderedInternships.filter(internship => {
+  const q = search.toLowerCase();
+
+  return (
+    internship.title.toLowerCase().includes(q) ||
+    internship.company.toLowerCase().includes(q)
+  );
+});
 
 const totalPages = Math.ceil(
-  orderedInternships.length / itemsPerPage
+  filteredInternships.length / itemsPerPage
 );
 
 const indexOfLastItem =
@@ -435,7 +446,7 @@ const indexOfFirstItem =
   indexOfLastItem - itemsPerPage;
 
 const currentInternships =
-  orderedInternships.slice(
+  filteredInternships.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
@@ -444,6 +455,18 @@ const currentInternships =
   <div className="page-container">
 
     <h2 className="title"> All Internships </h2>
+  
+   <input
+  type="text"
+  placeholder="Search by title or company..."
+  value={search}
+  onChange={(e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1); // VERY IMPORTANT for pagination
+  }}
+  className="form-input"
+  style={{ marginBottom: "15px" }}
+/>
 
     {/* FORM */}
     <div className="card internship-form">

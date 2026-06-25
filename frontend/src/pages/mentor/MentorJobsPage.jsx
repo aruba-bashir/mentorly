@@ -7,6 +7,7 @@
   export default function MentorJobsPage() {
 
   const [jobs, setJobs] = useState([]);
+  const [search, setSearch] = useState("");
   const [recommendedJobs, setRecommendedJobs] = useState([]);
 
   const [title, setTitle] = useState("");
@@ -19,6 +20,7 @@
  const [showFull, setShowFull] = useState({});
  const [showDeleteModal, setShowDeleteModal] = useState(false);
 const [selectedJobId, setSelectedJobId] = useState(null);
+
  const [currentPage, setCurrentPage] = useState(1);
  const itemsPerPage = 5;
   const token = localStorage.getItem("token");
@@ -384,8 +386,17 @@ const orderedJobs = [
     job => !recommendedIds.has(job._id)
   )
 ];
+const filteredJobs = orderedJobs.filter((job) => {
+  const searchText = search.toLowerCase();
+
+  return (
+    job.title?.toLowerCase().includes(searchText) ||
+    job.company?.toLowerCase().includes(searchText)
+  );
+});
+
 const totalPages = Math.ceil(
-  orderedJobs.length / itemsPerPage
+  filteredJobs.length / itemsPerPage
 );
 
 const indexOfLastItem =
@@ -395,15 +406,28 @@ const indexOfFirstItem =
   indexOfLastItem - itemsPerPage;
 
 const currentJobs =
-   orderedJobs.slice(
+   filteredJobs.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
+
   
  return (
   <div className="page-container">
 
     <h2 className="title">All Jobs</h2>
+    <input
+  type="text"
+  placeholder="Search by title or company..."
+  value={search}
+  onChange={(e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1); // VERY IMPORTANT for pagination
+  }}
+  className="form-input"
+  style={{ marginBottom: "15px" }}
+/>
+   
 
     {/* FORM */}
     <form onSubmit={handleSubmit} className="card" style={{ marginBottom: "20px" }}>

@@ -56,12 +56,12 @@ router.put("/:id", protect, async (req, res) => {
     }
 
     // creator can edit
-    if (
-      
-      webinar.createdBy.toString() !== req.user.id
-    ) {
-      return res.status(403).json({ message: "Not authorized" });
-    }
+   if (
+  webinar.createdBy.toString() !== req.user.id &&
+  req.user.role?.toLowerCase() !== "admin"
+) {
+  return res.status(403).json({ message: "Not authorized" });
+}
    //  Prevent editing past webinars
     if (new Date(webinar.date) < new Date()) {
       return res

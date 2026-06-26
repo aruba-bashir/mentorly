@@ -320,15 +320,15 @@ if (!email) {
         </option>
 
         <option value="member">
-          Member
+          Member (Student)
         </option>
 
         <option value="mentor">
-          Mentor
+          Mentor (Alumni / Working Professional)
         </option>
 
         <option value="master">
-          Master
+          Master (Professor / Academic)
         </option>
       </select>
 
